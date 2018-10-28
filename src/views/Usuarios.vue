@@ -1,12 +1,12 @@
 <template>
   <q-page class="generic-margin">
-    <p>Home</p>
+    <p>Usuários</p>
   </q-page>
 </template>
 
 <script>
 export default {
-  name: 'PageHome'
+  name: 'PageUsuarios'
 }
 </script>
 

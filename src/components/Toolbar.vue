@@ -1,15 +1,15 @@
 <template>
   <q-toolbar
-    color="primary"
     :inverted="$q.theme === 'ios'"
+    color="primary"
   >
     <q-btn
       flat
       dense
       round
-      @click="$_clickMenu"
       aria-label="Menu"
       icon="menu"
+      @click="$_clickMenu"
     />
 
     <q-toolbar-title>
@@ -24,8 +24,16 @@ export default {
   name: 'Toolbar',
   data () {
     return {
-      title: 'Título',
-      subtitle: 'Subtitulo da página'
+    }
+  },
+
+  computed: {
+    title () {
+      return this.$route.meta.title
+    },
+
+    subtitle () {
+      return this.$route.meta.subtitle
     }
   },
 

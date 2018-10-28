@@ -8,12 +8,13 @@
       v-model="menuAberto"
       content-class="bg-grey-2"
     >
-      <div class="flex flex-center">
+      <div class="menu-detalhes">
         <img
-          class="q-mt-md"
+          class="imagem-logo"
           alt="Logo Sinarodo"
           src="../assets/logo.png"
         >
+        <dados-usuario/>
       </div>
       <lista-menu-esquerdo/>
     </q-layout-drawer>
@@ -27,13 +28,15 @@
 <script>
 import Toolbar from '../components/Toolbar'
 import ListaMenuEsquerdo from '../components/ListaMenuEsquerdo'
+import DadosUsuario from '../components/DadosUsuario'
 
 export default {
   name: 'LayoutDefault',
 
   components: {
     Toolbar,
-    ListaMenuEsquerdo
+    ListaMenuEsquerdo,
+    DadosUsuario
   },
 
   data () {
@@ -51,5 +54,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.menu-detalhes {
+  background: #fff!important;
+  height: 130px;
 
+  .imagem-logo {
+    margin: 20px 60px;
+  }
+}
 </style>
