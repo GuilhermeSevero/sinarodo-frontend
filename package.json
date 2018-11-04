@@ -6,6 +6,7 @@
     "serve": "vue-cli-service serve -o",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
+    "lint:fix": "eslint --fix src/**",
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit"
   },
@@ -14,7 +15,9 @@
     "quasar-framework": "^0.17.0",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
-    "vuex": "^3.0.1"
+    "vuelidate": "^0.7.4",
+    "vuex": "^3.0.1",
+    "vuex-persistedstate": "^2.5.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.5",
@@ -45,6 +48,36 @@
       "plugin:vue/recommended",
       "@vue/standard"
     ],
+    "rules": {
+      "indent": [
+        "error",
+        2
+      ],
+      "vue/html-indent": [
+        "error",
+        4,
+        {
+          "attribute": 1,
+          "closeBracket": 0,
+          "alignAttributesVertically": true,
+          "ignores": []
+        }
+      ],
+      "vue/attributes-order": "off",
+      "spaced-comment": 0,
+      "space-before-function-paren": 0,
+      "space-before-blocks": 0,
+      "arrow-parens": 0,
+      "generator-star-spacing": 0,
+      "one-var": 0,
+      "import/first": 0,
+      "import/named": 2,
+      "import/namespace": 2,
+      "import/default": 2,
+      "import/export": 2,
+      "vue/no-use-v-if-with-v-for": 0,
+      "vue/no-v-html": 0
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }

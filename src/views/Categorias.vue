@@ -1,7 +1,7 @@
 <template>
-  <q-page class="generic-margin">
-    <p>CheckList</p>
-  </q-page>
+    <q-page class="generic-margin">
+        <p>Categorias</p>
+    </q-page>
 </template>
 
 <script>

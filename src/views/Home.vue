@@ -1,7 +1,7 @@
 <template>
-  <q-page class="generic-margin">
-    <p>Home</p>
-  </q-page>
+    <q-page class="generic-margin">
+        <p>Home</p>
+    </q-page>
 </template>
 
 <script>

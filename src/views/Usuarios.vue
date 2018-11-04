@@ -1,7 +1,7 @@
 <template>
-  <q-page class="generic-margin">
-    <p>Usuários</p>
-  </q-page>
+    <q-page class="generic-margin">
+        <p>Usuários</p>
+    </q-page>
 </template>
 
 <script>

@@ -12,7 +12,7 @@ module.exports = {
   ],
 
   lintOnSave: undefined,
-  baseUrl: '/app/',
+  // baseUrl: '/app/',
   outputDir: undefined,
   assetsDir: undefined,
   runtimeCompiler: undefined,

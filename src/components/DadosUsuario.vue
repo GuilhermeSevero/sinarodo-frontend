@@ -1,11 +1,11 @@
 <template>
-  <div class="row items-center container">
-    <q-icon
-      name="person"
-      size="25px"
-    />
-    <span>{{ nomeUsuario }}</span>
-  </div>
+    <div class="row items-center container">
+        <q-icon
+            name="person"
+            size="25px"
+        />
+        <span>{{ nomeUsuario }}</span>
+    </div>
 </template>
 
 <script>
@@ -19,7 +19,7 @@ export default {
 
   computed: {
     nomeUsuario () {
-      return this.$store.state.usuario.nome
+      return this.$login.usuarioLogado().nome
     }
   }
 }

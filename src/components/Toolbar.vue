@@ -1,22 +1,22 @@
 <template>
-  <q-toolbar
-    :inverted="$q.theme === 'ios'"
-    color="primary"
-  >
-    <q-btn
-      flat
-      dense
-      round
-      aria-label="Menu"
-      icon="menu"
-      @click="$_clickMenu"
-    />
+    <q-toolbar
+        :inverted="$q.theme === 'ios'"
+        color="primary"
+    >
+        <q-btn
+            flat
+            dense
+            round
+            aria-label="Menu"
+            icon="menu"
+            @click="$_clickMenu"
+        />
 
-    <q-toolbar-title>
-      {{ title }}
-      <div slot="subtitle">{{ subtitle }}</div>
-    </q-toolbar-title>
-  </q-toolbar>
+        <q-toolbar-title>
+            {{ title }}
+            <div slot="subtitle">{{ subtitle }}</div>
+        </q-toolbar-title>
+    </q-toolbar>
 </template>
 
 <script>
