@@ -4,6 +4,27 @@
         color="primary"
     >
         <q-btn
+            id="btnLayVoltar"
+            class="c-btn-voltar text-white no-padding"
+            dense
+            color="primary"
+            :big="isMobile"
+            icon="navigate_before"
+            round
+            v-show="!$route.meta.noBack"
+            flat
+            @click="$_voltar()"
+        >
+            <q-tooltip
+                anchor="center right"
+                self="center left"
+                :delay="500"
+            >
+                Voltar
+            </q-tooltip>
+        </q-btn>
+
+        <q-btn
             flat
             dense
             round
@@ -40,6 +61,10 @@ export default {
   methods: {
     $_clickMenu () {
       this.$emit('clickMenu')
+    },
+
+    $_voltar() {
+      window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')
     }
   }
 }

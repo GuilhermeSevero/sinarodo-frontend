@@ -23,7 +23,7 @@ Router.beforeEach((to, from, next) => {
     } else {
       alerta.warning({
         title: 'Acesso negado',
-        message: `Usuário informado, não possui permissão para acessar à página ${to.meta.titulo}`,
+        message: `Usuário informado, não possui permissão para acessar a página ${to.meta.title}`,
         duration: 10000
       })
       next(from)

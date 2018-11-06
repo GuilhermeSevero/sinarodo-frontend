@@ -1,3 +1,4 @@
+import login from '../plugins/login'
 import DefaultLayout from '../layouts/Default'
 import Home from '../views/Home'
 import Categorias from '../views/Categorias'
@@ -18,7 +19,7 @@ export default [
           title: 'Home page',
           subtitle: 'Subtitle',
           auth: true,
-          possuiNivel: () => true
+          possuiNivel: login.validarNivel(1, 2, 3)
         }
       },
       {
@@ -29,7 +30,7 @@ export default [
           title: 'Categorias',
           subtitle: 'Página de manutenção de categorias',
           auth: true,
-          possuiNivel: () => true
+          possuiNivel: login.validarNivel(1, 2)
         }
       },
       {
@@ -40,7 +41,7 @@ export default [
           title: 'Obras',
           subtitle: 'Página de manutenção das obras',
           auth: true,
-          possuiNivel: () => true
+          possuiNivel: login.validarNivel(1, 2, 3)
         }
       },
       {
@@ -51,7 +52,7 @@ export default [
           title: 'Usuários',
           subtitle: 'Página de manutenção de usuários',
           auth: true,
-          possuiNivel: () => true
+          possuiNivel: login.validarNivel(1, 2)
         }
       },
       {
@@ -62,7 +63,7 @@ export default [
           title: 'Configurações',
           subtitle: 'Página de manutenção das configurações do sistema',
           auth: true,
-          possuiNivel: () => true
+          possuiNivel: login.validarNivel(1)
         }
       }
     ]

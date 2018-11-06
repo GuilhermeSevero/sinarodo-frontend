@@ -204,10 +204,6 @@ export default {
     margin-top: 20px;
   }
 
-  .c-checkbox {
-    // color: orangered;
-  }
-
   .login-container {
     height: 420px;
     margin-top: 10%;
@@ -215,7 +211,7 @@ export default {
 
   .logo {
     width: 100%;
-    height: 120px;
+    height: 140px;
     background-repeat: no-repeat;
     background-position-x: 50%;
     background-position-y: 50%;
