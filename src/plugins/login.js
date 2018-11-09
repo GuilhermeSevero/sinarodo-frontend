@@ -7,11 +7,7 @@ class Login {
   constructor () {
     this.$defineStorage()
     this.axios = axios.create({
-      baseURL: 'http://127.0.0.1:8000',
-      timeout: 5000,
-      headers: {
-        'Authorization': 'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.UeTLepnxcvUBS7c8z2b9Vw5ahIUoY18P9tVtFCbBpIo'
-      }
+      baseURL: process.env.VUE_APP_API_SINARODO
     })
   }
 

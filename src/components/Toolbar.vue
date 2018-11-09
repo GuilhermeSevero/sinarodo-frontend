@@ -55,6 +55,10 @@ export default {
 
     subtitle () {
       return this.$route.meta.subtitle
+    },
+
+    isMobile() {
+      return this.$q.platform.is.mobile
     }
   },
 

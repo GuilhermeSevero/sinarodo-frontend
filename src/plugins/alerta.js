@@ -13,6 +13,9 @@ class Alertas {
           case 404:
             msg += `<br>${erro.data.status ? erro.data.status : ''}`
             break
+          case 422:
+            msg += `<br>${erro.data.erro}`
+            break
           case 400:
             for (let prop in erro.data.data) {
               if (erro.data.data.hasOwnProperty(prop)) {

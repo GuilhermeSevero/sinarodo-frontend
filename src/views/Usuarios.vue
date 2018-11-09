@@ -1,34 +1,104 @@
 <template>
-    <q-page class="generic-margin">
-        <q-table
+    <q-page class="layout-page">
+        <filter-box
+            id="fboxRastreamento"
+            v-model="filtros"
+            :aplicar-filtros="$_aplicarFiltros"
+            :limpar-filtros="$_limparFiltros"
+        >
+            <template slot-scope="props">
+                <div
+                    class="row justify-between no-margin no-padding"
+                    style="width: 100%"
+                >
+                    <div class="col-sm-6">
+                        <q-field class="g-form-filtro-field">
+                            <q-input
+                                id="inpCPF"
+                                v-model="filtros.cpf"
+                                float-label="CPF"
+                                clearable
+                                placeholder="000.000.000-00"
+                                v-mask="'###.###.###-##'"
+                                :autofocus="true"
+                                @keyup.enter="props.onKeyUp"
+                            />
+                        </q-field>
+                    </div>
+                    <div class="col-sm-6">
+                        <q-field class="g-form-filtro-field">
+                            <q-input
+                                id="inpMatricula"
+                                v-model="filtros.matricula"
+                                float-label="Matrícula"
+                                v-mask="'############'"
+                                clearable
+                                placeholder="Ex: 78455"
+                                @keyup.enter="props.onKeyUp"
+                            />
+                        </q-field>
+                    </div>
+                    <div class="col-sm-6">
+                        <q-field class="g-form-filtro-field">
+                            <q-input
+                                id="inpNome"
+                                v-model="filtros.nome"
+                                float-label="Nome"
+                                clearable
+                                @keyup.enter="props.onKeyUp"
+                            />
+                        </q-field>
+                    </div>
+                    <div class="col-sm-6">
+                        <q-field class="g-form-filtro-field">
+                            <q-input
+                                id="inpApelido"
+                                v-model="filtros.apelido"
+                                float-label="Apelido"
+                                clearable
+                                @keyup.enter="props.onKeyUp"
+                            />
+                        </q-field>
+                    </div>
+                </div>
+            </template>
+        </filter-box>
+        <data-table
             ref="table"
-            color="primary"
-            :data="serverData"
-            :columns="columns"
-            selection="single"
-            :selected.sync="selected"
-            row-key="id"
-            :pagination.sync="serverPagination"
-            @request="request"
-            :loading="loading"
+            url-base="/usuarios/"
+            :colunas="colunas"
+            :define-filtros="$_defineFiltros"
+            :selecionado.sync="selecionado"
+            chave="id"
         />
     </q-page>
 </template>
 
 <script>
+import { mask } from 'vue-the-mask'
+import FilterBox from '../components/FilterBox'
+import DataTable from '../components/DataTable'
+
 export default {
   name: 'PageUsuarios',
 
+  components: {
+    FilterBox,
+    DataTable
+  },
+
+  directives: { mask },
+
   data () {
     return {
-      serverData: [],
-      serverPagination: {
-        page: 1,
-        rowsNumber: 10,
-        sortBy: 'id',
-        descending: false
+      filtros: {
+        nome: '',
+        matricula: '',
+        apelido: '',
+        cpf: ''
       },
-      columns: [
+      dados: [],
+      colunas: [
         {
           name: 'id',
           required: true,
@@ -77,49 +147,39 @@ export default {
           sortable: true
         }
       ],
-      selected: [],
-      loading: false
+      selecionado: []
     }
   },
 
-  mounted () {
-    this.request({
-      pagination: this.serverPagination,
-      filter: this.filter
-    })
-  },
-
   methods: {
-    request (props) {
-      this.loading = true
+    $_defineFiltros(config) {
+      if (this.filtros.nome){
+        config.params.nome = this.filtros.nome
+      }
+      if (this.filtros.apelido){
+        config.params.apelido = this.filtros.apelido
+      }
+      if (this.filtros.matricula){
+        config.params.matricula = this.filtros.matricula
+      }
+      if (this.filtros.cpf){
+        config.params.cpf = this.filtros.cpf.split('.').join('').split('-').join('')
+      }
 
-      this.serverPagination = props.pagination
+      return config
+    },
 
-      let { page, rowsPerPage, sortBy, descending } = props.pagination
+    $_aplicarFiltros() {
+      this.$refs.table.pesquisar()
+    },
 
-      this.$axios.get('/usuarios/', {
-        params: {
-          perPage: rowsPerPage,
-          page: page,
-          sort: `${sortBy}${(descending ? '-' : '')}`
-        }
-      })
-        .then(response => {
-          console.log(response)
-          let rows = response.data
-
-          let table = this.$refs.table
-          table.sortMethod(rows, sortBy, descending)
-
-          this.serverPagination.rowsNumber = response.headers.rows
-
-          this.serverData = rows
-          this.loading = false
-        })
-        .catch(error => {
-          console.log(error)
-          this.loading = false
-        })
+    $_limparFiltros() {
+      this.filtros = {
+        nome: '',
+        matricula: '',
+        apelido: '',
+        cpf: ''
+      }
     }
   }
 }

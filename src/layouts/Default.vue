@@ -1,5 +1,7 @@
 <template>
     <q-layout view="lHh Lpr lFf">
+        <q-window-resize-observable @resize="$_onResize"/>
+
         <q-layout-header>
             <toolbar @clickMenu="$_toggleMenu"/>
         </q-layout-header>
@@ -103,6 +105,11 @@ export default {
   },
 
   methods: {
+    $_onResize(size) {
+      this.lowResolution = (size.width < 601)
+      this.$events.$emit('lowResolution', this.lowResolution)
+    },
+
     $_toggleMenu () {
       this.menuAberto = !this.menuAberto
     },

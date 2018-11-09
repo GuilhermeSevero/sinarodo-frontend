@@ -175,14 +175,15 @@ export default {
             this.loading = false
             this.senha = ''
           })
-          .catch(() => {
+          .catch((error) => {
             if (this.$refs.inputUsuario) {
               this.$refs.inputUsuario.focus()
             }
             this.$notify.error({
               title: 'Usuário não autenticado',
               message: 'Verifique o usuário e senha informados!',
-              duration: 5000
+              duration: 5000,
+              apiError: error
             })
             this.tentouLogar = true
             this.loading = false

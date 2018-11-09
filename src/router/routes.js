@@ -2,8 +2,10 @@ import login from '../plugins/login'
 import DefaultLayout from '../layouts/Default'
 import Home from '../views/Home'
 import Categorias from '../views/Categorias'
+import Categoria from '../views/Categoria'
 import Obras from '../views/Obras'
 import Usuarios from '../views/Usuarios'
+import Usuario from '../views/Usuario'
 import Configuracoes from '../views/Configuracoes'
 
 export default [
@@ -28,9 +30,20 @@ export default [
         component: Categorias,
         meta: {
           title: 'Categorias',
-          subtitle: 'Página de manutenção de categorias',
+          subtitle: 'Página de consulta de categorias',
           auth: true,
           possuiNivel: login.validarNivel(1, 2)
+        }
+      },
+      {
+        path: '/categorias/:id',
+        name: 'categoria',
+        component: Categoria,
+        meta: {
+          title: 'Categoria',
+          subtitle: 'Página de manutenção da categoria',
+          auth: true,
+          possuiNivel: login.validarNivel(1)
         }
       },
       {
@@ -50,7 +63,18 @@ export default [
         component: Usuarios,
         meta: {
           title: 'Usuários',
-          subtitle: 'Página de manutenção de usuários',
+          subtitle: 'Página de consulta de usuários',
+          auth: true,
+          possuiNivel: login.validarNivel(1, 2)
+        }
+      },
+      {
+        path: '/usuarios/:id',
+        name: 'usuario',
+        component: Usuario,
+        meta: {
+          title: 'Usuário',
+          subtitle: 'Página de manutenção do usuário',
           auth: true,
           possuiNivel: login.validarNivel(1, 2)
         }
