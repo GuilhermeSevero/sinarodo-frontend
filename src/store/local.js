@@ -7,33 +7,33 @@ Vue.use(Vuex)
 import Auth from './modules/auth.js'
 
 export default new Vuex.Store({
-  namespaced: true,
+    namespaced: true,
 
-  modules: {
-    auth: Auth
-  },
+    modules: {
+        auth: Auth
+    },
 
-  state: {
-    manterLogado: false
-  },
+    state: {
+        manterLogado: false
+    },
 
-  getters: {
+    getters: {
 
-  },
+    },
 
-  mutations: {
-    setManterLogado(state, manterLogado){
-      state.manterLogado = manterLogado
-    }
-  },
+    mutations: {
+        setManterLogado(state, manterLogado){
+            state.manterLogado = manterLogado
+        }
+    },
 
-  actions: {
+    actions: {
 
-  },
+    },
 
-  plugins: [
-    createPersistedState({
-      key: 'rastreamento-ecom'
-    })
-  ]
+    plugins: [
+        createPersistedState({
+            key: 'rastreamento-ecom'
+        })
+    ]
 })

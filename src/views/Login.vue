@@ -5,7 +5,7 @@
             <div>
                 <q-field
                     class="c-field-login"
-                    :count="32"
+                    :count="30"
                     :error="usuarioInvalido"
                     error-label="Usuário inválido"
                 >
@@ -17,7 +17,7 @@
                         float-label="Usuário"
                         autofocus
                         autocomplete="off"
-                        :maxlength="32"
+                        :maxlength="30"
                         @blur="$v.usuario.$touch"
                         @keyup.enter="$_handleSubmit"
                         :error="$v.usuario.$error"
@@ -25,7 +25,7 @@
                 </q-field>
                 <q-field
                     class="c-field-login"
-                    :count="128"
+                    :count="30"
                     :error="senhaInvalida"
                     error-label="Senha inválida"
                 >
@@ -36,7 +36,7 @@
                         float-label="Senha"
                         autocomplete="off"
                         type="password"
-                        :maxlength="128"
+                        :maxlength="30"
                         @blur="$v.senha.$touch"
                         @keyup.enter="$_handleSubmit"
                         :error="$v.senha.$error"
@@ -85,113 +85,121 @@ import { required } from 'vuelidate/lib/validators'
 import Alerta from '../components/Alertas'
 
 export default {
-  name: 'PgLogin',
+    name: 'PgLogin',
 
-  components: {
-    Alerta
-  },
-
-  data() {
-    return {
-      tentouLogar: false,
-      acessando: false,
-      senhaInvalida: false,
-      usuarioInvalido: false,
-      usuario: '',
-      senha: '',
-      loading: false
-    }
-  },
-
-  computed: {
-    codigoUsuario() {
-      return this.$login.storage.getters.getCodigoUsuario
+    components: {
+        Alerta
     },
 
-    manterLogado: {
-      get() {
-        return this.$localStore.state.manterLogado
-      },
-
-      set(manter) {
-        this.$localStore.commit('setManterLogado', manter)
-      }
-    }
-  },
-
-  watch: {
-    usuario: function() {
-      this.tentouLogar = false
-      this.usuarioInvalido = false
-    },
-
-    senha: function() {
-      this.tentouLogar = false
-      this.senhaInvalida = false
-    }
-  },
-
-  validations: {
-    usuario: { required },
-    senha: { required }
-  },
-
-  methods: {
-    $_handleSubmit() {
-      this.loading = true
-      this.$v.$touch()
-      if (this.$v.$error) {
-        this.usuarioInvalido = this.$v.usuario.$error
-        this.senhaInvalida = this.$v.senha.$error
-        if (this.$v.usuario.$error) {
-          this.$notify.error({
-            message: 'Informe seu usuário!',
-            duration: 3000
-          })
-        } else {
-          if (this.$v.senha.$error) {
-            this.$notify.error({
-              message: 'Informe a senha!',
-              duration: 3000
-            })
-          }
+    data() {
+        return {
+            tentouLogar: false,
+            acessando: false,
+            senhaInvalida: false,
+            usuarioInvalido: false,
+            usuario: '',
+            senha: '',
+            loading: false
         }
-        this.tentouLogar = true
-        this.loading = false
-      } else {
-        this.$login
-          .login(this.usuario, this.senha)
-          .then(resposta => {
-            if (resposta) {
-              this.$router.push('/')
+    },
+
+    computed: {
+        codigoUsuario() {
+            return this.$login.storage.getters.getCodigoUsuario
+        },
+
+        precisaNovoPassword() {
+            return this.$login.storage.getters.getUsuarioLogado.precisa_novo_password
+        },
+
+        manterLogado: {
+            get() {
+                return this.$localStore.state.manterLogado
+            },
+
+            set(manter) {
+                this.$localStore.commit('setManterLogado', manter)
+            }
+        }
+    },
+
+    watch: {
+        usuario: function() {
+            this.tentouLogar = false
+            this.usuarioInvalido = false
+        },
+
+        senha: function() {
+            this.tentouLogar = false
+            this.senhaInvalida = false
+        }
+    },
+
+    validations: {
+        usuario: { required },
+        senha: { required }
+    },
+
+    methods: {
+        $_handleSubmit() {
+            this.loading = true
+            this.$v.$touch()
+            if (this.$v.$error) {
+                this.usuarioInvalido = this.$v.usuario.$error
+                this.senhaInvalida = this.$v.senha.$error
+                if (this.$v.usuario.$error) {
+                    this.$notify.error({
+                        message: 'Informe seu usuário!',
+                        duration: 3000
+                    })
+                } else {
+                    if (this.$v.senha.$error) {
+                        this.$notify.error({
+                            message: 'Informe a senha!',
+                            duration: 3000
+                        })
+                    }
+                }
+                this.tentouLogar = true
+                this.loading = false
             } else {
-              this.$notify.error({
-                title: 'Usuário não autenticado',
-                message: 'Verifique as suas permissões de acesso!',
-                duration: 5000
-              })
+                this.$login
+                    .login(this.usuario, this.senha)
+                    .then(resposta => {
+                        if (resposta) {
+                            if (!this.precisaNovoPassword) {
+                                this.$router.push('/')
+                            } else {
+                                this.$router.push(`/nova-senha`)
+                            }
+                        } else {
+                            this.$notify.error({
+                                title: 'Usuário não autenticado',
+                                message: 'Verifique as suas permissões de acesso!',
+                                duration: 5000
+                            })
+                        }
+                        this.tentouLogar = true
+                        this.loading = false
+                        this.senha = ''
+                    })
+                    .catch((error) => {
+                        if (this.$refs.inputUsuario) {
+                            this.$refs.inputUsuario.focus()
+                        }
+                        this.$notify.error({
+                            title: 'Usuário não autenticado',
+                            message: 'Verifique o usuário e senha informados!',
+                            duration: 5000,
+                            apiError: error
+                        })
+                        this.tentouLogar = true
+                        this.loading = false
+                        this.senha = ''
+                    })
             }
-            this.tentouLogar = true
-            this.loading = false
-            this.senha = ''
-          })
-          .catch((error) => {
-            if (this.$refs.inputUsuario) {
-              this.$refs.inputUsuario.focus()
-            }
-            this.$notify.error({
-              title: 'Usuário não autenticado',
-              message: 'Verifique o usuário e senha informados!',
-              duration: 5000,
-              apiError: error
-            })
-            this.tentouLogar = true
-            this.loading = false
-            this.senha = ''
-          })
-      }
+        }
     }
-  }
 }
 </script>
 

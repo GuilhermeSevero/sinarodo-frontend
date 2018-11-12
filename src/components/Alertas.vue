@@ -27,34 +27,34 @@
 
 <script>
 export default {
-  data () {
-    return {
-      alertas: []
-    }
-  },
-
-  created () {
-    this.$events.$on('alerta', this.$_mostraAlerta)
-  },
-
-  destroyed () {
-    this.$events.$off('alerta', this.$_mostraAlerta)
-  },
-
-  methods: {
-    $_mostraAlerta (alerta) {
-      this.alertas.push(alerta)
-      if (alerta.duration) {
-        setTimeout(function () {
-          alerta.visible = false
-        }, alerta.duration)
-      }
+    data () {
+        return {
+            alertas: []
+        }
     },
 
-    $_fecharAlerta (alerta) {
-      alerta.visible = false
+    created () {
+        this.$events.$on('alerta', this.$_mostraAlerta)
+    },
+
+    destroyed () {
+        this.$events.$off('alerta', this.$_mostraAlerta)
+    },
+
+    methods: {
+        $_mostraAlerta (alerta) {
+            this.alertas.push(alerta)
+            if (alerta.duration) {
+                setTimeout(function () {
+                    alerta.visible = false
+                }, alerta.duration)
+            }
+        },
+
+        $_fecharAlerta (alerta) {
+            alerta.visible = false
+        }
     }
-  }
 }
 </script>
 

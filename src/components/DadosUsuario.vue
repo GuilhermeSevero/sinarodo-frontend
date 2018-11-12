@@ -10,18 +10,18 @@
 
 <script>
 export default {
-  name: 'DadosUsuario',
+    name: 'DadosUsuario',
 
-  data () {
-    return {
-    }
-  },
+    data () {
+        return {
+        }
+    },
 
-  computed: {
-    nomeUsuario () {
-      return this.$login.usuarioLogado().nome
+    computed: {
+        nomeUsuario () {
+            return this.$login.usuarioLogado().nome
+        }
     }
-  }
 }
 </script>
 

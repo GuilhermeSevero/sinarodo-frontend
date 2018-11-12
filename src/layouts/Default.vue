@@ -83,46 +83,46 @@ import Alertas from '../components/Alertas'
 import { AppFullscreen } from 'quasar'
 
 export default {
-  name: 'LayoutDefault',
+    name: 'LayoutDefault',
 
-  components: {
-    Toolbar,
-    ListaMenuEsquerdo,
-    DadosUsuario,
-    Alertas
-  },
-
-  data () {
-    return {
-      menuAberto: this.$q.platform.is.desktop
-    }
-  },
-
-  computed: {
-    isMobile() {
-      return this.$q.platform.is.mobile
-    }
-  },
-
-  methods: {
-    $_onResize(size) {
-      this.lowResolution = (size.width < 601)
-      this.$events.$emit('lowResolution', this.lowResolution)
+    components: {
+        Toolbar,
+        ListaMenuEsquerdo,
+        DadosUsuario,
+        Alertas
     },
 
-    $_toggleMenu () {
-      this.menuAberto = !this.menuAberto
+    data () {
+        return {
+            menuAberto: this.$q.platform.is.desktop
+        }
     },
 
-    $_fullscreen(){
-      AppFullscreen.toggle()
+    computed: {
+        isMobile() {
+            return this.$q.platform.is.mobile
+        }
     },
 
-    $_logout() {
-      AppFullscreen.exit()
-      this.$login.logout()
+    methods: {
+        $_onResize(size) {
+            this.lowResolution = (size.width < 601)
+            this.$events.$emit('lowResolution', this.lowResolution)
+        },
+
+        $_toggleMenu () {
+            this.menuAberto = !this.menuAberto
+        },
+
+        $_fullscreen(){
+            AppFullscreen.toggle()
+        },
+
+        $_logout() {
+            AppFullscreen.exit()
+            this.$login.logout()
+        }
     }
-  }
 }
 </script>
 

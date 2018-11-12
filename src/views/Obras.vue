@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'PageObras'
+    name: 'PageObras'
 }
 </script>
 

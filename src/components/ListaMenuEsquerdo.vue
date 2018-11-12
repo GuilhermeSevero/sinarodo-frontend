@@ -41,17 +41,17 @@
 
 <script>
 export default {
-  name: 'ListaMenuEsquerdo',
+    name: 'ListaMenuEsquerdo',
 
-  data () {
-    return {
+    data () {
+        return {
+
+        }
+    },
+
+    methods: {
 
     }
-  },
-
-  methods: {
-
-  }
 }
 </script>
 

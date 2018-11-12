@@ -42,35 +42,35 @@
 
 <script>
 export default {
-  name: 'Toolbar',
-  data () {
-    return {
-    }
-  },
-
-  computed: {
-    title () {
-      return this.$route.meta.title
+    name: 'Toolbar',
+    data () {
+        return {
+        }
     },
 
-    subtitle () {
-      return this.$route.meta.subtitle
+    computed: {
+        title () {
+            return this.$route.meta.title
+        },
+
+        subtitle () {
+            return this.$route.meta.subtitle
+        },
+
+        isMobile() {
+            return this.$q.platform.is.mobile
+        }
     },
 
-    isMobile() {
-      return this.$q.platform.is.mobile
-    }
-  },
+    methods: {
+        $_clickMenu () {
+            this.$emit('clickMenu')
+        },
 
-  methods: {
-    $_clickMenu () {
-      this.$emit('clickMenu')
-    },
-
-    $_voltar() {
-      window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')
+        $_voltar() {
+            window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')
+        }
     }
-  }
 }
 </script>
 

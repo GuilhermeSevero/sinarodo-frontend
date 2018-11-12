@@ -15,53 +15,53 @@ import { mask } from 'vue-the-mask'
 import DataTable from '../components/DataTable'
 
 export default {
-  name: 'PageCategorias',
+    name: 'PageCategorias',
 
-  components: {
-    DataTable
-  },
+    components: {
+        DataTable
+    },
 
-  directives: { mask },
+    directives: { mask },
 
-  data () {
-    return {
-      dados: [],
-      colunas: [
-        {
-          name: 'id',
-          required: true,
-          label: 'Código',
-          align: 'left',
-          field: 'id',
-          sortable: true
-        },
-        {
-          name: 'descricao',
-          required: true,
-          label: 'Descrição',
-          align: 'left',
-          field: 'descricao',
-          sortable: true
-        },
-        {
-          name: 'peso',
-          required: true,
-          label: 'Peso',
-          align: 'left',
-          field: 'peso',
-          sortable: true
+    data () {
+        return {
+            dados: [],
+            colunas: [
+                {
+                    name: 'id',
+                    required: true,
+                    label: 'Código',
+                    align: 'left',
+                    field: 'id',
+                    sortable: true
+                },
+                {
+                    name: 'descricao',
+                    required: true,
+                    label: 'Descrição',
+                    align: 'left',
+                    field: 'descricao',
+                    sortable: true
+                },
+                {
+                    name: 'peso',
+                    required: true,
+                    label: 'Peso',
+                    align: 'left',
+                    field: 'peso',
+                    sortable: true
+                }
+            ],
+            selecionado: []
         }
-      ],
-      selecionado: []
+    },
+
+    mounted() {
+        this.$refs.table.pesquisar()
+    },
+
+    methods: {
     }
-  },
-
-  mounted() {
-    this.$refs.table.pesquisar()
-  },
-
-  methods: {
-  }
 }
 </script>
 

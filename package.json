@@ -52,7 +52,7 @@
     "rules": {
       "indent": [
         "error",
-        2
+        4
       ],
       "vue/html-indent": [
         "error",

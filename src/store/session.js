@@ -7,45 +7,45 @@ Vue.use(Vuex)
 import Auth from './modules/auth.js'
 
 export default new Vuex.Store({
-  namespaced: true,
+    namespaced: true,
 
-  modules: {
-    auth: Auth
-  },
-
-  state: {
-    estabelecimentosCarregados: false,
-    estabelecimento: 0,
-    filtros: {}
-  },
-
-  getters: {
-
-  },
-
-  mutations: {
-    setEstabelecimentoCarregados(state, value) {
-      state.estabelecimentosCarregados = value
+    modules: {
+        auth: Auth
     },
 
-    setEstabelecimento(state, estabelecimento) {
-      state.estabelecimento = estabelecimento
+    state: {
+        estabelecimentosCarregados: false,
+        estabelecimento: 0,
+        filtros: {}
     },
 
-    setFiltros(state, filtros) {
-      state.filtros = filtros
-    }
-  },
+    getters: {
 
-  actions: {
+    },
 
-  },
+    mutations: {
+        setEstabelecimentoCarregados(state, value) {
+            state.estabelecimentosCarregados = value
+        },
 
-  plugins: [
-    createPersistedState({
-      key: 'rastreamento-ecom',
+        setEstabelecimento(state, estabelecimento) {
+            state.estabelecimento = estabelecimento
+        },
 
-      storage: window.sessionStorage
-    })
-  ]
+        setFiltros(state, filtros) {
+            state.filtros = filtros
+        }
+    },
+
+    actions: {
+
+    },
+
+    plugins: [
+        createPersistedState({
+            key: 'rastreamento-ecom',
+
+            storage: window.sessionStorage
+        })
+    ]
 })

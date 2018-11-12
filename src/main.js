@@ -13,7 +13,7 @@ import 'quasar-extras/material-icons'
 import Quasar from 'quasar'
 
 Vue.use(Quasar, {
-  config: {}, i18n: lang
+    config: {}, i18n: lang
 })
 
 import alerta from './plugins/alerta'
@@ -40,7 +40,7 @@ Vue.use(Vuelidate)
 Vue.config.productionTip = false
 
 new Vue({
-  router,
-  store,
-  render: h => h(App)
+    router,
+    store,
+    render: h => h(App)
 }).$mount('#app')

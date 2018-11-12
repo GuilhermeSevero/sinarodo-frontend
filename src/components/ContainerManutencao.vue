@@ -23,96 +23,104 @@
                 />
             </q-btn-group>
         </q-field>
+        <q-inner-loading :visible="carregando">
+            <q-spinner
+                size="50px"
+                color="primary"
+            />
+        </q-inner-loading>
     </div>
 </template>
 
 <script>
 export default {
-  name: 'ContainerManutencao',
+    name: 'ContainerManutencao',
 
-  props: {
-    url: {
-      type: String,
-      required: true,
-      default: ''
-    },
+    props: {
+        url: {
+            type: String,
+            required: true,
+            default: ''
+        },
 
-    parametros: {
-      type: Object,
-      required: true,
-      default: () => ({})
-    },
+        parametros: {
+            type: Object,
+            required: true,
+            default: () => ({})
+        },
 
-    registroNovo: {
-      type: Boolean,
-      required: true,
-      default: false
-    },
+        registroNovo: {
+            type: Boolean,
+            required: true,
+            default: false
+        },
 
-    validador: {
-      type: Object,
-      default: () => ({})
-    }
-  },
-
-  data() {
-    return {
-      lowResolution: false
-    }
-  },
-
-  mounted() {
-    console.log(this)
-    this.$on('lowResolution', (valor) => {
-      this.lowResolution = valor
-    })
-  },
-
-  methods: {
-    $_voltar() {
-      this.$router.back()
-    },
-
-    salvar() {
-      if (this.$_validarParametros()) {
-        this.$_defineRequest()
-          .then(resposta => {
-            this.$notify.success({
-              title: 'Registro salvo',
-              message: 'O registro foi salvo com sucesso!',
-              duration: 5000
-            })
-            this.$router.back()
-          })
-          .catch(erro => {
-            this.$notify.error({
-              title: 'Erro ao Salvar',
-              message: 'Não foi possível salvar o registro!',
-              apiError: erro
-            })
-          })
-      }
-    },
-
-    $_defineRequest() {
-      if (this.registroNovo) {
-        return this.$axios
-          .post(this.url, this.parametros)
-      }
-      return this.$axios
-        .put(`${this.url + this.$route.params.id}/`, this.parametros)
-    },
-
-    $_validarParametros() {
-      if (this.validador) {
-        for (let campo in this.validador.$params) {
-          this.validador[campo].$touch()
+        validador: {
+            type: Object,
+            default: () => ({})
         }
-        return !this.validador.$error
-      }
-      return true
+    },
+
+    data() {
+        return {
+            lowResolution: false
+        }
+    },
+
+    mounted() {
+        this.$on('lowResolution', (valor) => {
+            this.lowResolution = valor
+        })
+    },
+
+    methods: {
+        $_voltar() {
+            this.$router.back()
+        },
+
+        salvar() {
+            if (this.$_validarParametros()) {
+                this.carregando = true
+                this.$_defineRequest()
+                    .then(resposta => {
+                        this.$notify.success({
+                            title: 'Registro salvo',
+                            message: 'O registro foi salvo com sucesso!',
+                            duration: 5000
+                        })
+                        this.carregando = false
+                        this.$_voltar()
+                    })
+                    .catch(erro => {
+                        this.$notify.error({
+                            title: 'Erro ao Salvar',
+                            message: 'Não foi possível salvar o registro!',
+                            apiError: erro
+                        })
+                        this.carregando = false
+                    })
+            }
+        },
+
+        $_defineRequest() {
+            if (this.registroNovo) {
+                return this.$axios
+                    .post(this.url, this.parametros)
+            }
+            return this.$axios
+                .put(`${this.url + this.$route.params.id}/`, this.parametros)
+        },
+
+        $_validarParametros() {
+            if (this.validador) {
+                for (let campo in this.validador.$params) {
+                    this.validador[campo].$touch()
+                }
+                return !this.validador.$error
+            }
+            return true
+        }
     }
-  }
 }
 </script>
 

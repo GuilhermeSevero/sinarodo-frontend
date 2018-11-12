@@ -43,73 +43,73 @@
 <script>
 
 export default {
-  name: 'FilterBox',
+    name: 'FilterBox',
 
-  props: {
-    value: {
-      type: Object,
-      required: true
-    },
+    props: {
+        value: {
+            type: Object,
+            required: true
+        },
 
-    aplicarFiltros: {
-      type: Function,
-      required: true
-    },
+        aplicarFiltros: {
+            type: Function,
+            required: true
+        },
 
-    autoLoad: {
-      type: Boolean,
-      default: true
-    },
+        autoLoad: {
+            type: Boolean,
+            default: true
+        },
 
-    limparFiltros: {
-      type: Function,
-      required: true
-    }
-  },
-
-  data() {
-    return {
-      filtros: {},
-
-      filtroAberto: false,
-
-      lowResolution: false
-    }
-  },
-
-  mounted() {
-    if (this.autoLoad) {
-      this.aplicarFiltros()
-    }
-
-    this.$on('lowResolution', (valor) => {
-      this.lowResolution = valor
-    })
-  },
-
-  methods: {
-    $_alterarUserInterface(value){
-      if (this.userInterface) {
-        try {
-          this.$q.localStorage.set(`${this.chaveWebStorage}_openedFilter`, value)
-        } catch (e) {
-          alert('Necessário instalar plugin LocalStorage do Quasar Framework')
-          console.log(e)
+        limparFiltros: {
+            type: Function,
+            required: true
         }
-      } else {
-        this.filtroAberto = value
-      }
     },
 
-    $_doLimparFiltros() {
-      this.limparFiltros()
-      this.$_doAplicarFiltros()
+    data() {
+        return {
+            filtros: {},
+
+            filtroAberto: false,
+
+            lowResolution: false
+        }
     },
 
-    $_doAplicarFiltros() {
-      this.aplicarFiltros()
+    mounted() {
+        if (this.autoLoad) {
+            this.aplicarFiltros()
+        }
+
+        this.$on('lowResolution', (valor) => {
+            this.lowResolution = valor
+        })
+    },
+
+    methods: {
+        $_alterarUserInterface(value){
+            if (this.userInterface) {
+                try {
+                    this.$q.localStorage.set(`${this.chaveWebStorage}_openedFilter`, value)
+                } catch (e) {
+                    alert('Necessário instalar plugin LocalStorage do Quasar Framework')
+                    console.log(e)
+                }
+            } else {
+                this.filtroAberto = value
+            }
+        },
+
+        $_doLimparFiltros() {
+            this.limparFiltros()
+            this.$_doAplicarFiltros()
+        },
+
+        $_doAplicarFiltros() {
+            this.aplicarFiltros()
+        }
     }
-  }
 }
 </script>
 

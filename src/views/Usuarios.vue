@@ -80,108 +80,116 @@ import FilterBox from '../components/FilterBox'
 import DataTable from '../components/DataTable'
 
 export default {
-  name: 'PageUsuarios',
+    name: 'PageUsuarios',
 
-  components: {
-    FilterBox,
-    DataTable
-  },
+    components: {
+        FilterBox,
+        DataTable
+    },
 
-  directives: { mask },
+    directives: { mask },
 
-  data () {
-    return {
-      filtros: {
-        nome: '',
-        matricula: '',
-        apelido: '',
-        cpf: ''
-      },
-      dados: [],
-      colunas: [
-        {
-          name: 'id',
-          required: true,
-          label: 'Código',
-          align: 'rigth',
-          field: 'id',
-          sortable: true
-        },
-        {
-          name: 'nome',
-          required: true,
-          label: 'Nome',
-          align: 'left',
-          field: 'nome',
-          sortable: true
-        },
-        {
-          name: 'apelido',
-          required: true,
-          label: 'Apelido',
-          align: 'left',
-          field: 'apelido',
-          sortable: true
-        },
-        {
-          name: 'telefone',
-          required: true,
-          label: 'Telefone',
-          align: 'left',
-          field: 'telefone'
-        },
-        {
-          name: 'funcao1',
-          required: true,
-          label: 'Função 1',
-          align: 'left',
-          field: 'funcao1',
-          sortable: true
-        },
-        {
-          name: 'funcao2',
-          required: true,
-          label: 'Função 2',
-          align: 'left',
-          field: 'funcao2',
-          sortable: true
+    data () {
+        return {
+            filtros: {
+                nome: '',
+                matricula: '',
+                apelido: '',
+                cpf: ''
+            },
+            dados: [],
+            colunas: [
+                {
+                    name: 'id',
+                    required: true,
+                    label: 'Código',
+                    align: 'rigth',
+                    field: 'id',
+                    sortable: true
+                },
+                {
+                    name: 'matricula',
+                    required: true,
+                    label: 'Matrícula',
+                    align: 'left',
+                    field: 'matricula',
+                    sortable: true
+                },
+                {
+                    name: 'nome',
+                    required: true,
+                    label: 'Nome',
+                    align: 'left',
+                    field: 'nome',
+                    sortable: true
+                },
+                {
+                    name: 'apelido',
+                    required: true,
+                    label: 'Apelido',
+                    align: 'left',
+                    field: 'apelido',
+                    sortable: true
+                },
+                {
+                    name: 'telefone',
+                    required: true,
+                    label: 'Telefone',
+                    align: 'left',
+                    field: 'telefone'
+                },
+                {
+                    name: 'funcao_1',
+                    required: true,
+                    label: 'Função 1',
+                    align: 'left',
+                    field: 'funcao_1',
+                    sortable: true
+                },
+                {
+                    name: 'funcao_2',
+                    required: true,
+                    label: 'Função 2',
+                    align: 'left',
+                    field: 'funcao_2',
+                    sortable: true
+                }
+            ],
+            selecionado: []
         }
-      ],
-      selecionado: []
-    }
-  },
-
-  methods: {
-    $_defineFiltros(config) {
-      if (this.filtros.nome){
-        config.params.nome = this.filtros.nome
-      }
-      if (this.filtros.apelido){
-        config.params.apelido = this.filtros.apelido
-      }
-      if (this.filtros.matricula){
-        config.params.matricula = this.filtros.matricula
-      }
-      if (this.filtros.cpf){
-        config.params.cpf = this.filtros.cpf.split('.').join('').split('-').join('')
-      }
-
-      return config
     },
 
-    $_aplicarFiltros() {
-      this.$refs.table.pesquisar()
-    },
+    methods: {
+        $_defineFiltros(config) {
+            if (this.filtros.nome){
+                config.params.nome = this.filtros.nome
+            }
+            if (this.filtros.apelido){
+                config.params.apelido = this.filtros.apelido
+            }
+            if (this.filtros.matricula){
+                config.params.matricula = this.filtros.matricula
+            }
+            if (this.filtros.cpf){
+                config.params.cpf = this.filtros.cpf.split('.').join('').split('-').join('')
+            }
 
-    $_limparFiltros() {
-      this.filtros = {
-        nome: '',
-        matricula: '',
-        apelido: '',
-        cpf: ''
-      }
+            return config
+        },
+
+        $_aplicarFiltros() {
+            this.$refs.table.pesquisar()
+        },
+
+        $_limparFiltros() {
+            this.filtros = {
+                nome: '',
+                matricula: '',
+                apelido: '',
+                cpf: ''
+            }
+        }
     }
-  }
 }
 </script>
 

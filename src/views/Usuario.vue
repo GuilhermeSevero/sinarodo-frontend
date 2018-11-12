@@ -1,5 +1,18 @@
 <template>
     <q-page class="layout-page">
+        <div
+            v-if="!registroNovo"
+            class="row justify-end"
+        >
+            <q-btn
+                id="btnReiniciarSenha"
+                push
+                color="primary"
+                icon="vpn_key"
+                :label="lowResolution ? '' : 'Reiniciar Senha'"
+                @click="$_reiniciarSenha"
+            />
+        </div>
         <container-manutencao
             class="row justify-between no-margin no-padding"
             :url="url"
@@ -11,7 +24,7 @@
                 <q-field class="g-form-filtro-field">
                     <q-input
                         id="inpID"
-                        v-model="id"
+                        v-model="parametros.id"
                         float-label="Código"
                         disable
                     />
@@ -21,7 +34,7 @@
                 <q-field class="g-form-filtro-field">
                     <q-input
                         id="inpMatricula"
-                        v-model="matricula"
+                        v-model="parametros.matricula"
                         v-mask="'############'"
                         float-label="Matrícula"
                         autofocus
@@ -33,14 +46,14 @@
                 <q-field
                     class="g-form-filtro-field"
                     error-label="Digite o nome"
-                    :error="$v.nome.$error"
+                    :error="$v.parametros.nome.$error"
                 >
                     <q-input
                         id="inpNome"
-                        v-model="nome"
+                        v-model="parametros.nome"
                         float-label="Nome"
                         clearable
-                        @blur="$v.nome.$touch"
+                        @blur="$v.parametros.nome.$touch"
                     />
                 </q-field>
             </div>
@@ -48,7 +61,7 @@
                 <q-field class="g-form-filtro-field">
                     <q-input
                         id="inpApelido"
-                        v-model="apelido"
+                        v-model="parametros.apelido"
                         float-label="Apelido"
                         clearable
                     />
@@ -58,14 +71,14 @@
                 <q-field
                     class="g-form-filtro-field"
                     error-label="Digite o login"
-                    :error="$v.login.$error"
+                    :error="$v.parametros.login.$error"
                 >
                     <q-input
                         id="inpLogin"
-                        v-model="login"
+                        v-model="parametros.login"
                         float-label="Login"
                         clearable
-                        @blur="$v.login.$touch"
+                        @blur="$v.parametros.login.$touch"
                     />
                 </q-field>
             </div>
@@ -73,14 +86,14 @@
                 <q-field
                     class="g-form-filtro-field"
                     error-label="Digite um e-mail válido"
-                    :error="$v.email.$error"
+                    :error="$v.parametros.email.$error"
                 >
                     <q-input
                         id="inpEmail"
-                        v-model="email"
+                        v-model="parametros.email"
                         float-label="e-Mail"
                         clearable
-                        @blur="$v.email.$touch"
+                        @blur="$v.parametros.email.$touch"
                     />
                 </q-field>
             </div>
@@ -88,7 +101,7 @@
                 <q-field class="g-form-filtro-field">
                     <q-input
                         id="inpTelefone"
-                        v-model="telefone"
+                        v-model="parametros.telefone"
                         v-mask="'(##)#########'"
                         float-label="Telefone"
                         clearable
@@ -99,7 +112,7 @@
                 <q-field class="g-form-filtro-field">
                     <q-input
                         id="inpCpf"
-                        v-model="cpf"
+                        v-model="parametros.cpf"
                         placeholder="000.000.000-00"
                         v-mask="'###.###.###-##'"
                         float-label="CPF"
@@ -108,12 +121,17 @@
                 </q-field>
             </div>
             <div class="col-mmd-6">
-                <q-field class="g-form-filtro-field">
+                <q-field
+                    class="g-form-filtro-field"
+                    error-label="Digite uma função"
+                    :error="$v.parametros.funcao_1.$error"
+                >
                     <q-input
                         id="inpFuncao1"
-                        v-model="funcao1"
+                        v-model="parametros.funcao_1"
                         float-label="Função 01"
                         clearable
+                        @blur="$v.parametros.funcao_1.$touch"
                     />
                 </q-field>
             </div>
@@ -121,10 +139,38 @@
                 <q-field class="g-form-filtro-field">
                     <q-input
                         id="inpPFuncao2"
-                        v-model="funcao2"
+                        v-model="parametros.funcao_2"
                         float-label="Função 02"
                         clearable
                     />
+                </q-field>
+            </div>
+            <div class="col-sm-6">
+                <q-field class="g-form-filtro-field g-checkbox-field">
+                    <small>Permissão</small>
+                    <div class="g-checkbox-group row justify-start">
+                        <q-radio
+                            id="chkAdmin"
+                            class="col-md-6"
+                            v-model="parametros.permissao"
+                            label="Administrador"
+                            :val="1"
+                        />
+                        <q-radio
+                            id="chkGerente"
+                            class="col-md-6"
+                            v-model="parametros.permissao"
+                            label="Gerente"
+                            :val="2"
+                        />
+                        <q-radio
+                            id="chkUsuario"
+                            class="col-md-6"
+                            v-model="parametros.permissao"
+                            label="Usuário"
+                            :val="3"
+                        />
+                    </div>
                 </q-field>
             </div>
         </container-manutencao>
@@ -137,98 +183,103 @@ import { mask } from 'vue-the-mask'
 import ContainerManutencao from '../components/ContainerManutencao'
 
 export default {
-  name: 'PageUsuario',
+    name: 'PageUsuario',
 
-  components: {
-    ContainerManutencao
-  },
-
-  directives: { mask },
-
-  data () {
-    return {
-      url: '/usuarios/',
-      id: null,
-      matricula: null,
-      nome: '',
-      apelido: '',
-      email: '',
-      telefone: '',
-      login: '',
-      cpf: '',
-      permissao: 3,
-      funcao1: '',
-      funcao2: ''
-    }
-  },
-
-  computed: {
-    registroNovo() {
-      return this.$route.params.id === '0'
+    components: {
+        ContainerManutencao
     },
 
-    parametros: {
-      get() {
+    directives: { mask },
+
+    data () {
         return {
-          id: this.id,
-          matricula: this.matricula,
-          nome: this.nome,
-          apelido: this.apelido,
-          email: this.email,
-          telefone: this.telefone,
-          login: this.login,
-          cpf: this.cpf,
-          permissao: this.permissao,
-          funcao1: this.funcao1,
-          funcao2: this.funcao2
+            url: '/usuarios/',
+            senhaPadrao: '12345678',
+            parametros: {
+                id: null,
+                matricula: null,
+                nome: '',
+                apelido: '',
+                email: '',
+                telefone: '',
+                login: '',
+                cpf: '',
+                permissao: 3,
+                funcao_1: '',
+                funcao_2: ''
+            }
         }
-      },
-      set(parametros) {
-        this.id = parametros.id
-        this.matricula = parametros.matricula
-        this.nome = parametros.nome
-        this.apelido = parametros.apelido
-        this.email = parametros.email
-        this.telefone = parametros.telefone
-        this.login = parametros.login
-        this.cpf = parametros.cpf
-        this.permissao = parametros.permissao
-        this.funcao1 = parametros.funcao1
-        this.funcao2 = parametros.funcao2
-      }
-    }
-  },
+    },
 
-  validations: {
-    nome: { required },
-    email: { email },
-    login: { required },
-    permissao: { required },
-    funcao1: { required }
-  },
+    computed: {
+        registroNovo() {
+            return this.$route.params.id === '0'
+        }
+    },
 
-  mounted() {
-    if (!this.registroNovo) {
-      this.$_buscarDadosUsuario()
-    }
-  },
+    validations: {
+        parametros: {
+            nome: { required },
+            email: { email },
+            login: { required },
+            permissao: { required },
+            funcao_1: { required }
+        }
+    },
 
-  methods: {
-    $_buscarDadosUsuario() {
-      this.$axios.get(`${this.url + this.$route.params.id}/`)
-        .then(({ data }) => {
-          this.parametros = data
-        })
-        .catch(erro => {
-          this.$notify.error({
-            title: 'Erro ao Consultar',
-            message: 'Não foi possível buscar os dados do Usuario!',
-            apiError: erro
-          })
-          this.$router.back()
-        })
+    mounted() {
+        if (!this.registroNovo) {
+            this.$_buscarDadosUsuario()
+        } else {
+            this.parametros.password = '12345678'
+        }
+    },
+
+    methods: {
+        $_buscarDadosUsuario() {
+            this.$axios.get(`${this.url + this.$route.params.id}/`)
+                .then(({ data }) => {
+                    this.parametros = data
+                })
+                .catch(erro => {
+                    this.$notify.error({
+                        title: 'Erro ao Consultar',
+                        message: 'Não foi possível buscar os dados do Usuario!',
+                        apiError: erro
+                    })
+                    this.$router.back()
+                })
+        },
+        $_reiniciarSenha() {
+            this.$confirm('Reiniciar Senha?', `Deseja reiniciar a senha do usuário ${this.parametros.nome} para o valor 
+            "${this.senhaPadrao}"? Na próxima vez que o usuário logar será solicitado a alteração da senha!`)
+                .then(resposta => {
+                    if (resposta) {
+                        this.$axios
+                            .patch(`/usuarios/${this.$route.params.id}/`, {
+                                password: this.senhaPadrao,
+                                precisa_novo_password: true
+                            })
+                            .then(() => {
+                                this.$notify.success({
+                                    title: 'Senha reiniciada!',
+                                    message: `Senha do usuário foi reiniciada para ${this.senhaPadrao}. <br>
+                                    No próximo login será solicitado a criação de uma nova senha!`,
+                                    duration: 5000
+                                })
+                            })
+                            .catch(error => {
+                                this.$notify.error({
+                                    title: 'Erro ao criar do usuário',
+                                    message: 'Não foi possível criar a senha para o usuário!',
+                                    apiError: error
+                                })
+                                this.carregando = false
+                            })
+                    }
+                })
+        }
     }
-  }
 }
 </script>
 

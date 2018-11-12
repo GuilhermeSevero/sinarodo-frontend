@@ -59,71 +59,71 @@ import { mask } from 'vue-the-mask'
 import ContainerManutencao from '../components/ContainerManutencao'
 
 export default {
-  name: 'PageCategoria',
+    name: 'PageCategoria',
 
-  components: {
-    ContainerManutencao
-  },
-
-  directives: { mask },
-
-  data () {
-    return {
-      url: '/categorias/',
-      id: null,
-      descricao: '',
-      peso: null
-    }
-  },
-
-  computed: {
-    registroNovo() {
-      return this.$route.params.id === '0'
+    components: {
+        ContainerManutencao
     },
 
-    parametros: {
-      get() {
+    directives: { mask },
+
+    data () {
         return {
-          id: this.id,
-          descricao: this.descricao,
-          peso: this.peso
+            url: '/categorias/',
+            id: null,
+            descricao: '',
+            peso: null
         }
-      },
-      set(parametros) {
-        this.id = parametros.id
-        this.descricao = parametros.descricao
-        this.peso = parametros.peso
-      }
-    }
-  },
+    },
 
-  validations: {
-    descricao: { required },
-    peso: { required }
-  },
+    computed: {
+        registroNovo() {
+            return this.$route.params.id === '0'
+        },
 
-  mounted() {
-    if (!this.registroNovo) {
-      this.$_buscarDadosCategoria()
-    }
-  },
+        parametros: {
+            get() {
+                return {
+                    id: this.id,
+                    descricao: this.descricao,
+                    peso: this.peso
+                }
+            },
+            set(parametros) {
+                this.id = parametros.id
+                this.descricao = parametros.descricao
+                this.peso = parametros.peso
+            }
+        }
+    },
 
-  methods: {
-    $_buscarDadosCategoria() {
-      this.$axios.get(`${this.url + this.$route.params.id}/`)
-        .then(({ data }) => {
-          this.parametros = data
-        })
-        .catch(erro => {
-          this.$notify.error({
-            title: 'Erro ao Consultar',
-            message: 'Não foi possível buscar os dados da Categoria!',
-            apiError: erro
-          })
-          this.$router.back()
-        })
+    validations: {
+        descricao: { required },
+        peso: { required }
+    },
+
+    mounted() {
+        if (!this.registroNovo) {
+            this.$_buscarDadosCategoria()
+        }
+    },
+
+    methods: {
+        $_buscarDadosCategoria() {
+            this.$axios.get(`${this.url + this.$route.params.id}/`)
+                .then(({ data }) => {
+                    this.parametros = data
+                })
+                .catch(erro => {
+                    this.$notify.error({
+                        title: 'Erro ao Consultar',
+                        message: 'Não foi possível buscar os dados da Categoria!',
+                        apiError: erro
+                    })
+                    this.$router.back()
+                })
+        }
     }
-  }
 }
 </script>
 
