@@ -31,6 +31,7 @@
                 <q-item-side icon="account_box" />
                 <q-item-main label="Usuários" />
             </q-item>
+            <q-item-separator/>
             <q-item to="/configuracoes">
                 <q-item-side icon="settings" />
                 <q-item-main label="Configurações" />

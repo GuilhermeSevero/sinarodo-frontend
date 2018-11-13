@@ -6,6 +6,7 @@
             :colunas="colunas"
             :selecionado.sync="selecionado"
             chave="id"
+            sort-padrao="descricao"
         />
     </q-page>
 </template>

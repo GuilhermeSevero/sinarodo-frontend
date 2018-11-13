@@ -9,7 +9,7 @@
                 push
                 color="primary"
                 icon="vpn_key"
-                :label="lowResolution ? '' : 'Reiniciar Senha'"
+                label="Reiniciar Senha"
                 @click="$_reiniciarSenha"
             />
         </div>
@@ -19,6 +19,7 @@
             :parametros="parametros"
             :registro-novo="registroNovo"
             :validador="this.$v"
+            :modifica-parametros="$_modificaParametros"
         >
             <div class="col-mmd-6">
                 <q-field class="g-form-filtro-field">
@@ -278,6 +279,16 @@ export default {
                             })
                     }
                 })
+        },
+
+        $_modificaParametros(parametros) {
+            if (parametros.cpf) {
+                parametros.cpf = parametros.cpf.split('.').join('').split('-').join('')
+            }
+            if (parametros.telefone) {
+                parametros.telefone = parametros.telefone.replace('(', '').replace(')', '')
+            }
+            return parametros
         }
     }
 }

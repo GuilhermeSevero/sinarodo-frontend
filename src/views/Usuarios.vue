@@ -60,6 +60,34 @@
                             />
                         </q-field>
                     </div>
+                    <div class="col-sm-6">
+                        <q-field class="g-form-filtro-field g-checkbox-field">
+                            <small>Permissão</small>
+                            <div class="g-checkbox-group row justify-start">
+                                <q-checkbox
+                                    id="chkAdmin"
+                                    class="col-md-6"
+                                    v-model="filtros.permissao"
+                                    label="Administrador"
+                                    :val="1"
+                                />
+                                <q-checkbox
+                                    id="chkGerente"
+                                    class="col-md-6"
+                                    v-model="filtros.permissao"
+                                    label="Gerente"
+                                    :val="2"
+                                />
+                                <q-checkbox
+                                    id="chkUsuario"
+                                    class="col-md-6"
+                                    v-model="filtros.permissao"
+                                    label="Usuário"
+                                    :val="3"
+                                />
+                            </div>
+                        </q-field>
+                    </div>
                 </div>
             </template>
         </filter-box>
@@ -70,6 +98,7 @@
             :define-filtros="$_defineFiltros"
             :selecionado.sync="selecionado"
             chave="id"
+            sort-padrao="nome"
         />
     </q-page>
 </template>
@@ -95,7 +124,8 @@ export default {
                 nome: '',
                 matricula: '',
                 apelido: '',
-                cpf: ''
+                cpf: '',
+                permissao: []
             },
             dados: [],
             colunas: [
@@ -162,7 +192,7 @@ export default {
     methods: {
         $_defineFiltros(config) {
             if (this.filtros.nome){
-                config.params.nome = this.filtros.nome
+                config.params.search = this.filtros.nome
             }
             if (this.filtros.apelido){
                 config.params.apelido = this.filtros.apelido
@@ -172,6 +202,9 @@ export default {
             }
             if (this.filtros.cpf){
                 config.params.cpf = this.filtros.cpf.split('.').join('').split('-').join('')
+            }
+            if (this.filtros.permissao) {
+                config.params.permissao__in = this.filtros.permissao.join(',')
             }
 
             return config
@@ -186,7 +219,8 @@ export default {
                 nome: '',
                 matricula: '',
                 apelido: '',
-                cpf: ''
+                cpf: '',
+                permissao: []
             }
         }
     }

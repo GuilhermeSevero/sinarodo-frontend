@@ -82,7 +82,7 @@ export default {
             this.aplicarFiltros()
         }
 
-        this.$on('lowResolution', (valor) => {
+        this.$events.$on('lowResolution', (valor) => {
             this.lowResolution = valor
         })
     },

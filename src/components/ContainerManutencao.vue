@@ -15,6 +15,7 @@
                     @click="salvar"
                 />
                 <q-btn
+                    v-if="showCancelar"
                     id="btnCancelar"
                     push
                     icon="clear"
@@ -58,24 +59,48 @@ export default {
         validador: {
             type: Object,
             default: () => ({})
+        },
+
+        modificaParametros: {
+            type: Function,
+            default: null
+        },
+
+        idRegistro: {
+            type: Number | String,
+            default: 0
+        },
+
+        showCancelar: {
+            type: Boolean,
+            default: true
         }
     },
 
     data() {
         return {
-            lowResolution: false
+            lowResolution: false,
+            carregando: false
+        }
+    },
+
+    computed: {
+        id() {
+            return this.idRegistro > 0 ? this.idRegistro : this.$route.params.id
         }
     },
 
     mounted() {
-        this.$on('lowResolution', (valor) => {
+        this.$events.$on('lowResolution', (valor) => {
             this.lowResolution = valor
         })
     },
 
     methods: {
         $_voltar() {
-            this.$router.back()
+            if (this.showCancelar) {
+                this.$router.back()
+            }
         },
 
         salvar() {
@@ -103,12 +128,17 @@ export default {
         },
 
         $_defineRequest() {
+            let parametros = JSON.parse(JSON.stringify(this.parametros))
+            if (this.modificaParametros) {
+                parametros = this.modificaParametros(parametros)
+            }
+
             if (this.registroNovo) {
                 return this.$axios
-                    .post(this.url, this.parametros)
+                    .post(this.url, parametros)
             }
             return this.$axios
-                .put(`${this.url + this.$route.params.id}/`, this.parametros)
+                .put(`${this.url + this.id}/`, parametros)
         },
 
         $_validarParametros() {

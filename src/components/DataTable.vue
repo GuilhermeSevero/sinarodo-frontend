@@ -84,6 +84,11 @@ export default {
         defineFiltros: {
             type: Function,
             default: null
+        },
+
+        sortPadrao: {
+            type: String,
+            default: 'id'
         }
     },
 
@@ -94,7 +99,7 @@ export default {
             paginacao: {
                 page: 1,
                 rowsNumber: 10,
-                sortBy: 'id',
+                sortBy: this.sortPadrao,
                 descending: false
             }
         }
@@ -161,14 +166,13 @@ export default {
                     if (resposta) {
                         this.carregando = true
                         this.$axios
-                            .delete(this.urlBase + this.selecionado[0][this.chave])
+                            .delete(`${this.urlBase + this.selecionado[0][this.chave]}/`)
                             .then(resposta => {
                                 this.$notify.success({
                                     title: 'Registro excluído',
                                     message: 'O registro foi excluído com sucesso!',
                                     duration: 5000
                                 })
-                                // this.selecionado = []
                                 this.pesquisar()
                             })
                             .catch(erro => {
