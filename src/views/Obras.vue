@@ -71,6 +71,7 @@
 
 <script>
 import { date } from 'quasar'
+import { mask } from 'vue-the-mask'
 import FilterBox from '../components/FilterBox'
 import DataTable from '../components/DataTable'
 import DatetimeRange from '../components/DatetimeRange'
@@ -83,6 +84,8 @@ export default {
         DataTable,
         DatetimeRange
     },
+
+    directives: { mask },
 
     data() {
         return {

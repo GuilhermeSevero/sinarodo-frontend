@@ -22,11 +22,13 @@
                     class="g-form-filtro-field"
                     error-label="Digite uma descrição"
                     :error="$v.descricao.$error"
+                    :count="60"
                 >
                     <q-input
                         id="inpDescricao"
                         v-model="descricao"
                         float-label="Descrição"
+                        :maxlength="60"
                         autofocus
                         clearable
                         @blur="$v.descricao.$touch"
@@ -43,7 +45,7 @@
                         id="inpPeso"
                         v-model="peso"
                         v-mask="'###'"
-                        float-label="Peso"
+                        float-label="Peso (%)"
                         clearable
                         @blur="$v.peso.$touch"
                     />

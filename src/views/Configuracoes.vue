@@ -14,6 +14,9 @@
                     <q-input
                         id="inValorPonto"
                         v-model="parametros.valor_por_ponto"
+                        type="number"
+                        :decimals="2"
+                        prefix="R$ "
                         float-label="Valor por ponto"
                         autofocus
                         clearable
@@ -25,6 +28,7 @@
                     <q-input
                         id="inpAcrescimoEncarregado"
                         v-model="parametros.acrescimo_encarregado"
+                        suffix="%"
                         float-label="Acréscimo encarregado"
                         clearable
                     />

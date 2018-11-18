@@ -19,20 +19,32 @@
                 <q-item-side icon="home"/>
                 <q-item-main label="Home"/>
             </q-item>
-            <q-item to="/categorias">
+            <q-item
+                v-if="validarNivel(1, 2)"
+                to="/categorias"
+            >
                 <q-item-side icon="assignment" />
                 <q-item-main label="Categorias" />
             </q-item>
-            <q-item to="/obras">
+            <q-item
+                v-if="validarNivel(1, 2)"
+                to="/obras"
+            >
                 <q-item-side icon="business_center" />
                 <q-item-main label="Obras" />
             </q-item>
-            <q-item to="/usuarios">
+            <q-item
+                v-if="validarNivel(1, 2)"
+                to="/usuarios"
+            >
                 <q-item-side icon="account_box" />
                 <q-item-main label="Usuários" />
             </q-item>
             <q-item-separator/>
-            <q-item to="/configuracoes">
+            <q-item
+                v-if="validarNivel(1)"
+                to="/configuracoes"
+            >
                 <q-item-side icon="settings" />
                 <q-item-main label="Configurações" />
             </q-item>
@@ -41,6 +53,8 @@
 </template>
 
 <script>
+import login from '../plugins/login'
+
 export default {
     name: 'ListaMenuEsquerdo',
 
@@ -51,7 +65,10 @@ export default {
     },
 
     methods: {
-
+        validarNivel(...niveis) {
+            let validar = login.validarNivel(...niveis)
+            return validar()
+        }
     }
 }
 </script>

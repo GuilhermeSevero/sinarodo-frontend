@@ -96,7 +96,6 @@
             url-base="/usuarios/"
             :colunas="colunas"
             :define-filtros="$_defineFiltros"
-            :selecionado.sync="selecionado"
             chave="id"
             sort-padrao="nome"
         />
@@ -184,8 +183,7 @@ export default {
                     field: 'funcao_2',
                     sortable: true
                 }
-            ],
-            selecionado: []
+            ]
         }
     },
 

@@ -32,11 +32,14 @@
                 </q-field>
             </div>
             <div class="col-mmd-6">
-                <q-field class="g-form-filtro-field">
+                <q-field
+                    class="g-form-filtro-field"
+                    :count="10"
+                >
                     <q-input
                         id="inpMatricula"
                         v-model="parametros.matricula"
-                        v-mask="'############'"
+                        v-mask="'##########'"
                         float-label="Matrícula"
                         autofocus
                         clearable
@@ -48,22 +51,28 @@
                     class="g-form-filtro-field"
                     error-label="Digite o nome"
                     :error="$v.parametros.nome.$error"
+                    :count="100"
                 >
                     <q-input
                         id="inpNome"
                         v-model="parametros.nome"
                         float-label="Nome"
+                        maxlength="100"
                         clearable
                         @blur="$v.parametros.nome.$touch"
                     />
                 </q-field>
             </div>
             <div class="col-mmd-6">
-                <q-field class="g-form-filtro-field">
+                <q-field
+                    class="g-form-filtro-field"
+                    :count="50"
+                >
                     <q-input
                         id="inpApelido"
                         v-model="parametros.apelido"
                         float-label="Apelido"
+                        maxlength="50"
                         clearable
                     />
                 </q-field>
@@ -73,11 +82,13 @@
                     class="g-form-filtro-field"
                     error-label="Digite o login"
                     :error="$v.parametros.login.$error"
+                    :count="30"
                 >
                     <q-input
                         id="inpLogin"
                         v-model="parametros.login"
                         float-label="Login"
+                        maxlength="30"
                         clearable
                         @blur="$v.parametros.login.$touch"
                     />
@@ -88,11 +99,14 @@
                     class="g-form-filtro-field"
                     error-label="Digite um e-mail válido"
                     :error="$v.parametros.email.$error"
+                    :count="250"
                 >
                     <q-input
                         id="inpEmail"
                         v-model="parametros.email"
+                        type="email"
                         float-label="e-Mail"
+                        maxlength="250"
                         clearable
                         @blur="$v.parametros.email.$touch"
                     />
@@ -103,6 +117,7 @@
                     <q-input
                         id="inpTelefone"
                         v-model="parametros.telefone"
+                        type="tel"
                         v-mask="'(##)#########'"
                         float-label="Telefone"
                         clearable
@@ -126,22 +141,28 @@
                     class="g-form-filtro-field"
                     error-label="Digite uma função"
                     :error="$v.parametros.funcao_1.$error"
+                    :count="30"
                 >
                     <q-input
                         id="inpFuncao1"
                         v-model="parametros.funcao_1"
                         float-label="Função 01"
+                        maxlength="30"
                         clearable
                         @blur="$v.parametros.funcao_1.$touch"
                     />
                 </q-field>
             </div>
             <div class="col-mmd-6">
-                <q-field class="g-form-filtro-field">
+                <q-field
+                    class="g-form-filtro-field"
+                    :count="30"
+                >
                     <q-input
                         id="inpPFuncao2"
                         v-model="parametros.funcao_2"
                         float-label="Função 02"
+                        maxlength="30"
                         clearable
                     />
                 </q-field>
