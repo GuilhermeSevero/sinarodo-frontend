@@ -127,7 +127,7 @@
                         </q-item-side>
                         <q-item-main>
                             <q-rating
-                                v-model="categoria.pontuacao"
+                                v-model="categoria.nota"
                                 :min="1"
                                 :max="3"
                                 size="30px"
@@ -329,7 +329,7 @@ export default {
                             id: element.id,
                             descricao: element.descricao,
                             peso: element.peso,
-                            pontuacao: 1
+                            nota: 1
                         }))
                 })
                 .catch(erro => {
