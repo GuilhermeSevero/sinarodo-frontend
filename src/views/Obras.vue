@@ -60,11 +60,11 @@
         <data-table
             ref="table"
             url-base="/obras/"
-            :colunas="colunas"
-            :define-filtros="$_defineFiltros"
-            :selecionado.sync="selecionado"
+            url-inserir="/obras/novo/"
             chave="id"
             sort-padrao="pedido"
+            :colunas="colunas"
+            :define-filtros="$_defineFiltros"
         />
     </q-page>
 </template>
@@ -110,7 +110,7 @@ export default {
                     name: 'id',
                     required: true,
                     label: 'Código',
-                    align: 'rigth',
+                    align: 'left',
                     field: 'id',
                     sortable: true
                 },
@@ -127,7 +127,9 @@ export default {
                     required: true,
                     label: 'Lançamento',
                     align: 'left',
-                    field: 'data_lancamento'
+                    field: 'data_lancamento',
+                    sortable: true,
+                    format: val => date.formatDate(val, 'DD/MM/YYYY')
                 },
                 {
                     name: 'data_inicio',
@@ -135,7 +137,8 @@ export default {
                     label: 'Inicio',
                     align: 'left',
                     field: 'data_inicio',
-                    sortable: true
+                    sortable: true,
+                    format: val => date.formatDate(val, 'DD/MM/YYYY')
                 },
                 {
                     name: 'data_final',
@@ -143,10 +146,10 @@ export default {
                     label: 'Fim',
                     align: 'left',
                     field: 'data_final',
-                    sortable: true
+                    sortable: true,
+                    format: val => date.formatDate(val, 'DD/MM/YYYY')
                 }
-            ],
-            selecionado: []
+            ]
         }
     },
 

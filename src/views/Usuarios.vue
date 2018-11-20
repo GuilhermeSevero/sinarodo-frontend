@@ -132,7 +132,7 @@ export default {
                     name: 'id',
                     required: true,
                     label: 'Código',
-                    align: 'rigth',
+                    align: 'left',
                     field: 'id',
                     sortable: true
                 },

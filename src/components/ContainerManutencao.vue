@@ -10,7 +10,7 @@
                     id="btnSalvar"
                     push
                     color="primary"
-                    icon="search"
+                    icon="done"
                     :label="lowResolution ? '' : 'Salvar'"
                     @click="salvar"
                 />

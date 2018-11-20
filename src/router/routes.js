@@ -4,6 +4,7 @@ import Home from '../views/Home'
 import Categorias from '../views/Categorias'
 import Categoria from '../views/Categoria'
 import Obras from '../views/Obras'
+import Obra from '../views/Obra'
 import Usuarios from '../views/Usuarios'
 import Usuario from '../views/Usuario'
 import Configuracoes from '../views/Configuracoes'
@@ -53,6 +54,17 @@ export default [
                 meta: {
                     title: 'Obras',
                     subtitle: 'Página de manutenção das obras',
+                    auth: true,
+                    possuiNivel: login.validarNivel(1, 2, 3)
+                }
+            },
+            {
+                path: '/obras/novo/',
+                name: 'obra',
+                component: Obra,
+                meta: {
+                    title: 'Obra e Premiação',
+                    subtitle: 'Página de cadastro de obra e Premiação de usuários',
                     auth: true,
                     possuiNivel: login.validarNivel(1, 2, 3)
                 }

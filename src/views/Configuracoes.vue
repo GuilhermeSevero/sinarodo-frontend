@@ -16,8 +16,7 @@
                         v-model="parametros.valor_por_ponto"
                         type="number"
                         :decimals="2"
-                        prefix="R$ "
-                        float-label="Valor por ponto"
+                        float-label="Valor por ponto (R$)"
                         autofocus
                         clearable
                     />
@@ -29,7 +28,7 @@
                         id="inpAcrescimoEncarregado"
                         v-model="parametros.acrescimo_encarregado"
                         suffix="%"
-                        float-label="Acréscimo encarregado"
+                        float-label="Acréscimo encarregado (%)"
                         clearable
                     />
                 </q-field>

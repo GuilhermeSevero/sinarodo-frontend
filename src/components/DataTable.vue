@@ -89,6 +89,16 @@ export default {
         sortPadrao: {
             type: String,
             default: 'id'
+        },
+
+        urlInserir: {
+            type: String,
+            default: ''
+        },
+
+        urlEditar: {
+            type: String,
+            default: ''
         }
     },
 
@@ -153,11 +163,11 @@ export default {
         },
 
         $_inserirClick() {
-            this.$router.push(`${this.urlBase}0`)
+            this.$router.push(this.urlInserir ? this.urlInserir : `${this.urlBase}0`)
         },
 
         $_alterarClick() {
-            this.$router.push(`${this.urlBase}${this.selecionado[0][this.chave]}`)
+            this.$router.push(this.urlEditar ? this.urlEditar : `${this.urlBase}${this.selecionado[0][this.chave]}`)
         },
 
         $_excluirClick() {
