@@ -60,12 +60,26 @@
         <data-table
             ref="table"
             url-base="/obras/"
-            url-inserir="/obras/novo/"
             chave="id"
             sort-padrao="pedido"
             :colunas="colunas"
+            :selecionado="selecionado"
             :define-filtros="$_defineFiltros"
-        />
+        >
+            <template
+                slot="top-right"
+                slot-scope="props"
+            >
+                <q-btn
+                    color="primary"
+                    label="Lançar Premiação"
+                    icon="card_giftcard"
+                    :disable="!props.selecionado"
+                    push
+                    :to="`/premiacao/${props.chaveSelecionado}`"
+                />
+            </template>
+        </data-table>
     </q-page>
 </template>
 
@@ -105,6 +119,7 @@ export default {
                 }
             },
             dados: [],
+            selecionado: [],
             colunas: [
                 {
                     name: 'id',

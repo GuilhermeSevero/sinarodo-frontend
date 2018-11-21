@@ -14,7 +14,8 @@
         binary-state-sort
     >
         <template
-            slot="top"
+            v-if="!ocultarBotoes"
+            slot="top-left"
             slot-scope="props"
         >
             <q-btn-group
@@ -45,6 +46,16 @@
                     @click="$_excluirClick"
                 />
             </q-btn-group>
+        </template>
+        <template
+            slot="top-right"
+            slot-scope="props"
+        >
+            <slot
+                name="top-right"
+                :selecionado="selecionado.length > 0"
+                :chaveSelecionado="selecionado[0] ? selecionado[0][chave] : ''"
+            />
         </template>
     </q-table>
 </template>
@@ -99,6 +110,11 @@ export default {
         urlEditar: {
             type: String,
             default: ''
+        },
+
+        ocultarBotoes: {
+            type: Boolean,
+            default: false
         }
     },
 

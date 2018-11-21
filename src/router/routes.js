@@ -5,6 +5,7 @@ import Categorias from '../views/Categorias'
 import Categoria from '../views/Categoria'
 import Obras from '../views/Obras'
 import Obra from '../views/Obra'
+import Premiacao from '../views/Premiar'
 import Usuarios from '../views/Usuarios'
 import Usuario from '../views/Usuario'
 import Configuracoes from '../views/Configuracoes'
@@ -59,14 +60,25 @@ export default [
                 }
             },
             {
-                path: '/obras/novo/',
+                path: '/obras/:id',
                 name: 'obra',
                 component: Obra,
                 meta: {
-                    title: 'Obra e Premiação',
-                    subtitle: 'Página de cadastro de obra e Premiação de usuários',
+                    title: 'Obra',
+                    subtitle: 'Página de manutenção da obra',
                     auth: true,
                     possuiNivel: login.validarNivel(1, 2, 3)
+                }
+            },
+            {
+                path: '/premiacao/:id_obra',
+                name: 'premiacao',
+                component: Premiacao,
+                meta: {
+                    title: 'Premiações',
+                    subtitle: 'Página de premiação dos usuários',
+                    auth: true,
+                    possuiNivel: login.validarNivel(1, 2)
                 }
             },
             {

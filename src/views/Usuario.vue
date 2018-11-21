@@ -273,7 +273,7 @@ export default {
                 })
         },
         $_reiniciarSenha() {
-            this.$confirm('Reiniciar Senha?', `Deseja reiniciar a senha do usuário ${this.parametros.nome} para o valor 
+            this.$confirm('Reiniciar Senha?', `Deseja reiniciar a senha do usuário ${this.parametros.nome} para o valor
             "${this.senhaPadrao}"? Na próxima vez que o usuário logar será solicitado a alteração da senha!`)
                 .then(resposta => {
                     if (resposta) {
