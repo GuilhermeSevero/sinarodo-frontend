@@ -35,6 +35,13 @@
             </q-item>
             <q-item
                 v-if="validarNivel(1, 2)"
+                to="/premiacoes"
+            >
+                <q-item-side icon="card_giftcard" />
+                <q-item-main label="Premiações" />
+            </q-item>
+            <q-item
+                v-if="validarNivel(1, 2)"
                 to="/usuarios"
             >
                 <q-item-side icon="account_box" />

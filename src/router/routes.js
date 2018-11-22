@@ -5,7 +5,9 @@ import Categorias from '../views/Categorias'
 import Categoria from '../views/Categoria'
 import Obras from '../views/Obras'
 import Obra from '../views/Obra'
-import Premiacao from '../views/Premiar'
+import PremiarObra from '../views/PremiarObra'
+import Premiacoes from '../views/Premiacoes'
+import Premiacao from '../views/Premiacao'
 import Usuarios from '../views/Usuarios'
 import Usuario from '../views/Usuario'
 import Configuracoes from '../views/Configuracoes'
@@ -54,7 +56,7 @@ export default [
                 component: Obras,
                 meta: {
                     title: 'Obras',
-                    subtitle: 'Página de manutenção das obras',
+                    subtitle: 'Página de consulta das obras',
                     auth: true,
                     possuiNivel: login.validarNivel(1, 2, 3)
                 }
@@ -71,12 +73,34 @@ export default [
                 }
             },
             {
-                path: '/premiacao/:id_obra',
-                name: 'premiacao',
-                component: Premiacao,
+                path: '/obras/:id_obra/premiar',
+                name: 'premiarObra',
+                component: PremiarObra,
                 meta: {
                     title: 'Premiações',
                     subtitle: 'Página de premiação dos usuários',
+                    auth: true,
+                    possuiNivel: login.validarNivel(1, 2)
+                }
+            },
+            {
+                path: '/premiacoes',
+                name: 'premiacoes',
+                component: Premiacoes,
+                meta: {
+                    title: 'Premiações',
+                    subtitle: 'Página de consulta de premiações',
+                    auth: true,
+                    possuiNivel: login.validarNivel(1, 2)
+                }
+            },
+            {
+                path: '/premiacoes/:id',
+                name: 'premiacao',
+                component: Premiacao,
+                meta: {
+                    title: 'Premiação',
+                    subtitle: 'Página de detalhes da premiação',
                     auth: true,
                     possuiNivel: login.validarNivel(1, 2)
                 }

@@ -76,7 +76,7 @@
                     icon="card_giftcard"
                     :disable="!props.selecionado"
                     push
-                    :to="`/premiacao/${props.chaveSelecionado}`"
+                    :to="`/obras/${props.chaveSelecionado}/premiar`"
                 />
             </template>
         </data-table>

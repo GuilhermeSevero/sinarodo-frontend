@@ -167,7 +167,7 @@ export default {
             let config = {
                 params: {
                     page: page,
-                    perPage: rowsPerPage,
+                    per_page: rowsPerPage,
                     sort: `${sortBy}${(descending ? '-' : '')}`
                 }
             }

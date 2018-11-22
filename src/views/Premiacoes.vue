@@ -29,7 +29,7 @@
                             <datetime-range
                                 id="dtrLancamento"
                                 v-model="filtros.lancamento"
-                                float-label-from="Lançada em"
+                                float-label-from="Obra lançada em"
                                 type="date"
                             />
                         </q-field>
@@ -39,7 +39,7 @@
                             <datetime-range
                                 id="dtrInicion"
                                 v-model="filtros.inicio"
-                                float-label-from="Iniciou em"
+                                float-label-from="Obra iniciou em"
                                 type="date"
                             />
                         </q-field>
@@ -49,9 +49,61 @@
                             <datetime-range
                                 id="dtrFim"
                                 v-model="filtros.fim"
-                                float-label-from="Finalizou em"
+                                float-label-from="Obra finalizou em"
                                 type="date"
                             />
+                        </q-field>
+                    </div>
+                    <div class="col-sm-6">
+                        <q-field class="g-form-filtro-field">
+                            <q-input
+                                id="inpCPF"
+                                v-model="filtros.cpfUsuario"
+                                float-label="CPF Usuário"
+                                clearable
+                                placeholder="000.000.000-00"
+                                v-mask="'###.###.###-##'"
+                                :autofocus="true"
+                                @keyup.enter="props.onKeyUp"
+                            />
+                        </q-field>
+                    </div>
+                    <div class="col-sm-6">
+                        <q-field class="g-form-filtro-field">
+                            <q-input
+                                id="inpMatricula"
+                                v-model="filtros.matriculaUsuario"
+                                float-label="Matrícula Usuário"
+                                v-mask="'############'"
+                                clearable
+                                placeholder="Ex: 78455"
+                                @keyup.enter="props.onKeyUp"
+                            />
+                        </q-field>
+                    </div>
+                    <div class="col-sm-6">
+                        <q-field class="g-form-filtro-field">
+                            <q-input
+                                id="inpNome"
+                                v-model="filtros.nomeUsuario"
+                                float-label="Nome Usuário"
+                                clearable
+                                @keyup.enter="props.onKeyUp"
+                            />
+                        </q-field>
+                    </div>
+                    <div class="col-sm-6">
+                        <q-field class="g-form-filtro-field g-checkbox-field">
+                            <small>Mostrar</small>
+                            <div class="g-checkbox-group row justify-start">
+                                <q-checkbox
+                                    id="chkAdmin"
+                                    class="col-md-6"
+                                    v-model="filtros.encarregado"
+                                    label="Somente encarregado"
+                                    :val="1"
+                                />
+                            </div>
                         </q-field>
                     </div>
                 </div>
@@ -59,46 +111,179 @@
         </filter-box>
         <data-table
             ref="table"
-            url-base="/premiacoes/"
+            url-base="/usuario_obra/"
             chave="id"
-            sort-padrao="pedido"
+            sort-padrao="obra__pedido"
             :colunas="colunas"
-            :selecionado="selecionado"
             :define-filtros="$_defineFiltros"
-        />
+            ocultar-botoes
+        >
+            <template
+                slot="top-right"
+                slot-scope="props"
+            >
+                <q-btn
+                    color="primary"
+                    label="Abrir"
+                    icon="assessment"
+                    :disable="!props.selecionado"
+                    push
+                    :to="`/premiacoes/${props.chaveSelecionado}`"
+                />
+            </template>
+        </data-table>
     </q-page>
 </template>
 
 <script>
+import { mask } from 'vue-the-mask'
+import { date } from 'quasar'
 import FilterBox from '../components/FilterBox'
 import DataTable from '../components/DataTable'
+import DatetimeRange from '../components/DatetimeRange'
 
 export default {
     name: 'PagePremiacoes',
 
     components: {
         FilterBox,
-        DataTable
+        DataTable,
+        DatetimeRange
     },
+
+    directives: { mask },
 
     data() {
         return {
             filtros: {
-
+                pedido: '',
+                lancamento: {
+                    from: '',
+                    to: ''
+                },
+                inicio: {
+                    from: '',
+                    to: ''
+                },
+                fim: {
+                    from: '',
+                    to: ''
+                },
+                nomeUsuario: '',
+                cpfUsuario: '',
+                matriculaUsuario: '',
+                encarregado: []
             },
             dados: [],
-            colunas: []
+            colunas: [
+                {
+                    name: 'obra__pedido',
+                    required: true,
+                    label: 'Pedido',
+                    align: 'left',
+                    field: row => row.obra.pedido,
+                    sortable: true
+                },
+                {
+                    name: 'usuario__nome',
+                    required: true,
+                    label: 'Usuário',
+                    align: 'left',
+                    field: row => row.usuario.nome,
+                    sortable: true
+                },
+                {
+                    name: 'nota_final',
+                    required: true,
+                    label: 'Nota',
+                    align: 'left',
+                    field: 'nota_final'
+                },
+                {
+                    name: 'observacao',
+                    required: true,
+                    label: 'Observação',
+                    align: 'left',
+                    field: 'observacao'
+                },
+                {
+                    name: 'encarregado',
+                    required: true,
+                    label: 'Encarregado',
+                    align: 'center',
+                    field: 'encarregado',
+                    format: val => val ? 'SIM' : 'NÃO'
+                }
+            ]
         }
     },
 
     methods: {
         $_defineFiltros(config) {
             config.params.expand = '~all'
+            if (this.filtros.pedido) {
+                config.params.obra_pedido = this.filtros.pedido
+            }
+
+            if (this.filtros.lancamento.from) {
+                config.params.obra_data_lancamento__gte = date.formatDate(this.filtros.lancamento.from, 'YYYY-MM-DD')
+            }
+            if (this.filtros.lancamento.to) {
+                config.params.obra_data_lancamento__lte = date.formatDate(this.filtros.lancamento.to, 'YYYY-MM-DD')
+            }
+
+            if (this.filtros.inicio.from) {
+                config.params.obra_data_inicio__gte = date.formatDate(this.filtros.inicio.from, 'YYYY-MM-DD')
+            }
+            if (this.filtros.inicio.to) {
+                config.params.obra_data_inicio__lte = date.formatDate(this.filtros.inicio.to, 'YYYY-MM-DD')
+            }
+
+            if (this.filtros.fim.from) {
+                config.params.obra_data_final__gte = date.formatDate(this.filtros.fim.from, 'YYYY-MM-DD')
+            }
+            if (this.filtros.fim.to) {
+                config.params.obra_data_final__lte = date.formatDate(this.filtros.fim.to, 'YYYY-MM-DD')
+            }
+            if (this.filtros.matriculaUsuario){
+                config.params.usuario_matricula = this.filtros.matriculaUsuario
+            }
+            if (this.filtros.cpfUsuario){
+                config.params.usuario_cpf = this.filtros.cpfUsuario.split('.').join('').split('-').join('')
+            }
+            if (this.filtros.nomeUsuario){
+                config.params.search = this.filtros.nomeUsuario
+            }
+
+            if (this.filtros.encarregado.length) {
+                config.params.encarregado = true
+            }
             return config
+        },
+
+        $_aplicarFiltros() {
+            this.$refs.table.pesquisar()
         },
 
         $_limparFiltros() {
             this.filtros = {
+                pedido: '',
+                lancamento: {
+                    from: '',
+                    to: ''
+                },
+                inicio: {
+                    from: '',
+                    to: ''
+                },
+                fim: {
+                    from: '',
+                    to: ''
+                },
+                nomeUsuario: '',
+                cpfUsuario: '',
+                matriculaUsuario: '',
+                encarregado: []
             }
         }
     }
