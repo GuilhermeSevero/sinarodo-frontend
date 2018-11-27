@@ -4,7 +4,6 @@
             ref="table"
             url-base="/categorias/"
             :colunas="colunas"
-            :selecionado.sync="selecionado"
             chave="id"
             sort-padrao="descricao"
         />
@@ -53,8 +52,7 @@ export default {
                     sortable: true,
                     format: (value) => `${value}%`
                 }
-            ],
-            selecionado: []
+            ]
         }
     },
 

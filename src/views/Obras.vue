@@ -63,7 +63,6 @@
             chave="id"
             sort-padrao="pedido"
             :colunas="colunas"
-            :selecionado="selecionado"
             :define-filtros="$_defineFiltros"
         >
             <template
@@ -118,8 +117,9 @@ export default {
                     to: ''
                 }
             },
+
             dados: [],
-            selecionado: [],
+
             colunas: [
                 {
                     name: 'id',

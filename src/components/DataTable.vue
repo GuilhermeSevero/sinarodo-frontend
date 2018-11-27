@@ -95,11 +95,6 @@ export default {
             default: 'single'
         },
 
-        selecionado: {
-            type: Array,
-            default: () => []
-        },
-
         chave: {
             type: String,
             default: 'id'
@@ -139,6 +134,7 @@ export default {
     data() {
         return {
             carregando: false,
+            selecionado: [],
             dados: [],
             paginacao: {
                 page: 1,
