@@ -10,7 +10,11 @@
             :id-registro="idRegistroConfiguracao"
         >
             <div class="col-mmd-6">
-                <q-field class="g-form-filtro-field">
+                <q-field
+                    class="g-form-filtro-field"
+                    error-label="Digite o valor do ponto"
+                    :error="$v.parametros.valor_por_ponto.$error"
+                >
                     <q-input
                         id="inValorPonto"
                         v-model="parametros.valor_por_ponto"
@@ -19,17 +23,23 @@
                         float-label="Valor por ponto (R$)"
                         autofocus
                         clearable
+                        @blur="$v.parametros.valor_por_ponto.$touch"
                     />
                 </q-field>
             </div>
             <div class="col-mmd-6">
-                <q-field class="g-form-filtro-field">
+                <q-field
+                    class="g-form-filtro-field"
+                    error-label="Digite o valor do acréscimo"
+                    :error="$v.parametros.acrescimo_encarregado.$error"
+                >
                     <q-input
                         id="inpAcrescimoEncarregado"
                         v-model="parametros.acrescimo_encarregado"
                         suffix="%"
                         float-label="Acréscimo encarregado (%)"
                         clearable
+                        @blur="$v.parametros.acrescimo_encarregado.$touch"
                     />
                 </q-field>
             </div>
