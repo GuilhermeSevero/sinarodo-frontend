@@ -105,15 +105,15 @@
                 <q-btn
                     id="btnVoltar"
                     push
-                    icon="clear"
-                    :label="stepper === 'obra' ? 'Cancelar' : 'Voltar'"
+                    :icon="stepper === 'encarregado' ? 'clear' : 'arrow_back'"
+                    :label="stepper === 'encarregado' ? 'Cancelar' : 'Voltar'"
                     @click="$_voltar"
                 />
                 <q-btn
                     id="btnProximo"
                     push
                     color="primary"
-                    icon="done"
+                    :icon="stepper === 'premiacao' ? 'done' : 'arrow_forward'"
                     :label="stepper === 'premiacao' ? 'Salvar' : 'Próximo'"
                     @click="$_proximo"
                 />

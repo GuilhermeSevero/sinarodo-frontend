@@ -112,26 +112,14 @@
         <data-table
             ref="table"
             url-base="/usuario_obra/"
+            url-editar="/premiacoes/"
             chave="id"
             sort-padrao="obra__pedido"
             :colunas="colunas"
             :define-filtros="$_defineFiltros"
-            ocultar-botoes
-        >
-            <template
-                slot="top-right"
-                slot-scope="props"
-            >
-                <q-btn
-                    color="primary"
-                    label="Abrir"
-                    icon="assessment"
-                    :disable="!props.selecionado"
-                    push
-                    :to="`/premiacoes/${props.chaveSelecionado}`"
-                />
-            </template>
-        </data-table>
+            ocultar-insert
+            visualizar-somente
+        />
     </q-page>
 </template>
 

@@ -50,7 +50,8 @@ export default {
                     label: 'Peso',
                     align: 'left',
                     field: 'peso',
-                    sortable: true
+                    sortable: true,
+                    format: (value) => `${value}%`
                 }
             ],
             selecionado: []

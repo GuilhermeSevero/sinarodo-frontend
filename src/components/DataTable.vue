@@ -2,6 +2,7 @@
     <q-table
         ref="table"
         color="primary"
+        :title="titulo"
         :data="dados"
         :columns="colunas"
         :selection="selecao"
@@ -14,15 +15,22 @@
         binary-state-sort
     >
         <template
-            v-if="!ocultarBotoes"
             slot="top-left"
             slot-scope="props"
         >
+            <span
+                v-if="titulo"
+                class="q-title"
+            >
+                {{ titulo }}
+            </span>
             <q-btn-group
+                v-else
                 class="btn-group"
                 outline
             >
                 <q-btn
+                    v-if="!ocultarInsert"
                     color="primary"
                     label="Incluir"
                     icon="add"
@@ -31,8 +39,8 @@
                 />
                 <q-btn
                     color="primary"
-                    label="Alterar"
-                    icon="create"
+                    :label="visualizarSomente ? 'Visualizar' : 'Alterar'"
+                    :icon="visualizarSomente ? 'web' : 'create'"
                     :disable="selecionado.length === 0"
                     push
                     @click="$_alterarClick"
@@ -77,6 +85,11 @@ export default {
             default: () => []
         },
 
+        titulo: {
+            type: String,
+            default: ''
+        },
+
         selecao: {
             type: String,
             default: 'single'
@@ -112,7 +125,12 @@ export default {
             default: ''
         },
 
-        ocultarBotoes: {
+        ocultarInsert: {
+            type: Boolean,
+            default: false
+        },
+
+        visualizarSomente: {
             type: Boolean,
             default: false
         }
@@ -127,8 +145,13 @@ export default {
                 rowsNumber: 10,
                 sortBy: this.sortPadrao,
                 descending: false
-            }
+            },
+            suprimirErro: false
         }
+    },
+
+    destroyed() {
+        this.suprimirErro = true
     },
 
     methods: {
@@ -153,11 +176,13 @@ export default {
                 })
                 .catch(erro => {
                     this.carregando = false
-                    this.$notify.error({
-                        title: 'Erro ao realizar a consulta',
-                        message: 'Não foi possível carregar os dados',
-                        apiError: erro
-                    })
+                    if (!this.suprimirErro) {
+                        this.$notify.error({
+                            title: 'Erro ao realizar a consulta',
+                            message: 'Não foi possível carregar os dados',
+                            apiError: erro
+                        })
+                    }
                 })
         },
 
@@ -183,7 +208,7 @@ export default {
         },
 
         $_alterarClick() {
-            this.$router.push(this.urlEditar ? this.urlEditar : `${this.urlBase}${this.selecionado[0][this.chave]}`)
+            this.$router.push(`${this.urlEditar ? this.urlEditar : this.urlBase}${this.selecionado[0][this.chave]}`)
         },
 
         $_excluirClick() {
@@ -192,7 +217,7 @@ export default {
                     if (resposta) {
                         this.carregando = true
                         this.$axios
-                            .delete(`${this.urlBase + this.selecionado[0][this.chave]}/`)
+                            .delete(`${this.urlBase}${this.selecionado[0][this.chave]}/`)
                             .then(resposta => {
                                 this.$notify.success({
                                     title: 'Registro excluído',
@@ -202,11 +227,13 @@ export default {
                                 this.pesquisar()
                             })
                             .catch(erro => {
-                                this.$notify.error({
-                                    title: 'Erro ao Excluir',
-                                    message: 'Não foi possível excluir o registro!',
-                                    apiError: erro
-                                })
+                                if (!this.suprimirErro) {
+                                    this.$notify.error({
+                                        title: 'Erro ao Excluir',
+                                        message: 'Não foi possível excluir o registro!',
+                                        apiError: erro
+                                    })
+                                }
                                 this.carregando = false
                             })
                     }

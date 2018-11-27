@@ -45,28 +45,32 @@
             </div>
         </div>
         <hr>
-        <q-table
+        <data-table
             ref="table"
-            color="primary"
-            title="Pontuação por Categorias"
-            :data="dados ? dados.premiacoes : []"
-            :columns="colunas"
-            row-key="id"
-            :rows-per-page-options="[5, 10, 20, 50, 100]"
-            binary-state-sort
+            url-base="/premiacoes/"
+            titulo="Pontuação por Categorias"
+            :colunas="colunas"
+            row-chave="id"
+            sort-padrao="ano_periodo"
+            :define-filtros="$_defineFiltrosPremiacoes"
         />
     </q-page>
 </template>
 
 <script>
 import { date } from 'quasar'
+import DataTable from '../components/DataTable'
 
 export default {
     name: 'PagePremiacao',
 
+    components: { DataTable },
+
     data() {
         return {
             dados: null,
+
+            premiacoes: [],
 
             colunas: [
                 {
@@ -135,6 +139,12 @@ export default {
     methods: {
         formatDate: (data, formato) => date.formatDate(data, formato),
 
+        $_defineFiltrosPremiacoes(config) {
+            config.params.id_usuario_obra = this.idUsuarioObra
+            config.params.expand = '~all'
+            return config
+        },
+
         $_buscarDados() {
             this.$axios
                 .get(`/usuario_obra/${this.idUsuarioObra}/`, {
@@ -144,6 +154,7 @@ export default {
                 })
                 .then(({ data }) => {
                     this.dados = data
+                    this.$refs.table.pesquisar()
                 })
                 .catch(erro => {
                     this.$notify.error({
