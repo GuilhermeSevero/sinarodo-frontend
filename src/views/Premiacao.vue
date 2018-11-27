@@ -44,10 +44,11 @@
                 </div>
             </div>
         </div>
+        <hr>
         <q-table
             ref="table"
             color="primary"
-            title="Pontuações por Categorias"
+            title="Pontuação por Categorias"
             :data="dados ? dados.premiacoes : []"
             :columns="colunas"
             row-key="id"

@@ -1,11 +1,5 @@
 <template>
     <q-page class="layout-page">
-        <p
-            v-for="usuario in parametros.usuarios"
-            :key="parametros.usuarios.indexOf(usuario)"
-        >
-            {{ usuario.nome }}
-        </p>
         <q-stepper
             ref="stepper"
             v-model="stepper"
@@ -15,82 +9,45 @@
         >
             <!-- Passo 01 -->
             <q-step
-                title="Manutenção da Obra"
-                name="obra"
+                title="Encarregado"
+                name="encarregado"
                 default
-                :error="erroStep1"
+                :error="this.$v.parametros.encarregado.$error"
             >
                 <q-field
                     class="g-form-filtro-field"
-                    :count="20"
+                    error-label="Selecione o encarregado da Obra"
+                    :error="$v.parametros.encarregado.$error"
                 >
-                    <q-input
-                        id="inpPedido"
-                        v-model="parametros.obra.pedido"
-                        float-label="Pedido"
-                        maxlength="20"
-                        disable
-                    />
-                </q-field>
-                <q-field
-                    class="g-form-filtro-field"
-                >
-                    <q-datetime
-                        id="dateInicio"
-                        v-model="parametros.obra.data_inicio"
-                        type="date"
-                        float-label="Data Inicio"
+                    <q-select
+                        id="selEncarregado"
+                        v-model="parametros.encarregado"
+                        float-label="Encarregado"
                         clearable
-                        format="DD/MM/YYYY"
-                        disable
-                    />
-                </q-field>
-                <q-field
-                    class="g-form-filtro-field"
-                    error-label="Digite a data do fim da obra"
-                    :error="$v.parametros.obra.data_final.$error"
-                >
-                    <q-datetime
-                        id="dateFinal"
-                        v-model="parametros.obra.data_final"
-                        type="date"
-                        float-label="Data Final"
-                        clearable
-                        format="DD/MM/YYYY"
-                        :disable="!podeAlterarDataFinal"
-                        @blur="$v.parametros.obra.data_final.$touch"
-                    />
-                </q-field>
-                <q-field
-                    class="g-form-filtro-field"
-                    :count="300"
-                >
-                    <q-input
-                        id="inpObservacao"
-                        v-model="parametros.obra.observacao"
-                        type="textarea"
-                        float-label="Observação"
-                        maxlength="300"
-                        disable
+                        filter
+                        autofocus-filter
+                        filter-placeholder="Filtrar Usuário"
+                        :options="usuarios"
+                        :disable="!podeAlterarEncarregado"
                     />
                 </q-field>
             </q-step>
 
             <!-- Passo 02 -->
             <q-step
-                title="Usuarios"
+                title="Equipe"
                 name="usuarios"
-                :error="erroStep2"
+                :error="this.$v.parametros.usuarios.$error"
             >
                 <q-field
                     class="g-form-filtro-field"
-                    error-label="Selecione os usuários"
+                    error-label="Selecione os colaboradores"
                     :error="$v.parametros.usuarios.$error"
                 >
                     <q-select
                         id="selUsuarios"
                         v-model="parametros.usuarios"
-                        float-label="Usuários"
+                        float-label="Colaboradores"
                         clearable
                         filter
                         autofocus-filter
@@ -119,7 +76,7 @@
             <q-step
                 title="Premiação"
                 name="premiacao"
-                :error="erroStep3"
+                :error="false"
             >
                 <q-list highlight>
                     <q-list-header>Defina a pontuação dos usuários selecionados</q-list-header>
@@ -173,32 +130,22 @@
 
 <script>
 import { required, minLength } from 'vuelidate/lib/validators'
-import { date } from 'quasar'
 
 export default {
     name: 'PagePremiar',
 
     data() {
         return {
-            url: '/obras/',
-
             carregando: false,
 
             stepper: 'obras',
 
             usuarios: [],
 
-            selecionado: [],
+            podeAlterarEncarregado: true,
 
             parametros: {
-                obra: {
-                    id: null,
-                    pedido: null,
-                    data_lancamento: null,
-                    data_inicio: null,
-                    data_final: null,
-                    observacao: ''
-                },
+                encarregado: null,
                 usuarios: [],
                 categorias: [],
                 premiacao_observacao: ''
@@ -209,30 +156,12 @@ export default {
     computed: {
         idObra() {
             return this.$route.params.id_obra
-        },
-
-        podeAlterarDataFinal() {
-            return !this.parametros.obra.data_final
-        },
-
-        erroStep1() {
-            return this.$v.parametros.obra.$error
-        },
-
-        erroStep2() {
-            return this.$v.parametros.usuarios.$error
-        },
-
-        erroStep3() {
-            return false
         }
     },
 
     validations: {
         parametros: {
-            obra: {
-                data_final: { required }
-            },
+            encarregado: { required },
             usuarios: {
                 required,
                 minLength: minLength(1)
@@ -246,15 +175,7 @@ export default {
 
     methods: {
         $_modificaParametros(parametros) {
-            if (parametros.obra.data_lancamento) {
-                parametros.obra.data_lancamento = date.formatDate(this.parametros.obra.data_lancamento, 'YYYY-MM-DD')
-            }
-            if (parametros.obra.data_inicio) {
-                parametros.obra.data_inicio = date.formatDate(this.parametros.obra.data_inicio, 'YYYY-MM-DD')
-            }
-            if (parametros.obra.data_final) {
-                parametros.obra.data_final = date.formatDate(this.parametros.obra.data_final, 'YYYY-MM-DD')
-            }
+            parametros.id_obra = this.idObra
 
             parametros.categorias.forEach(element => {
                 switch (element.nota) {
@@ -273,12 +194,16 @@ export default {
                 }
             })
 
+            if (!this.podeAlterarEncarregado) {
+                delete parametros.encarregado
+            }
+
             return parametros
         },
 
         $_onStep(stepAtual) {
             if (stepAtual === 'usuarios') {
-                this.$v.parametros.$touch()
+                this.$v.parametros.encarregado.$touch()
             } else if (stepAtual === 'premiacao') {
                 this.$v.parametros.usuarios.$touch()
             }
@@ -316,7 +241,7 @@ export default {
         },
 
         $_voltar() {
-            if (this.stepper === 'obra') {
+            if (this.stepper === 'encarregado') {
                 this.$router.back()
             } else {
                 this.$refs.stepper.previous()
@@ -324,14 +249,20 @@ export default {
         },
 
         $_buscarDados() {
+            this.carregando = true
             Promise.all([
-                this.$_buscarDadosObra(),
+                this.$_buscarUsuarioObra(),
                 this.$_buscarUsuarios(),
                 this.$_buscaCategorias()
             ])
                 .then(respostas => {
-                    this.parametros.obra = respostas[0].data
-                    this.stepper = this.podeAlterarDataFinal ? 'obra' : 'usuarios'
+                    try {
+                        this.parametros.encarregado = respostas[0].data[0].id_usuario
+                        this.podeAlterarEncarregado = !respostas[0].data[0].id
+                    } catch (erro) {
+                        this.podeAlterarEncarregado = true
+                    }
+                    this.stepper = this.podeAlterarEncarregado ? 'encarregado' : 'usuarios'
 
                     this.usuarios = respostas[1].data
                         .map(element => ({
@@ -346,8 +277,9 @@ export default {
                             id: element.id,
                             descricao: element.descricao,
                             peso: element.peso,
-                            nota: 1
+                            nota: 2
                         }))
+                    this.carregando = false
                 })
                 .catch(erro => {
                     this.$notify.error({
@@ -355,17 +287,22 @@ export default {
                         message: 'Erro ao executar comando no banco de dados.',
                         apiError: erro
                     })
+                    this.carregando = false
                     this.$router.back()
                 })
         },
 
-        $_buscarDadosObra() {
-            return this.$axios.get(`/obras/${this.$route.params.id_obra}/`)
+        $_buscarUsuarioObra() {
+            return this.$axios.get(`/usuario_obra/`, {
+                params: {
+                    encarregado: 'True',
+                    id_obra: this.idObra
+                }
+            })
         },
 
         $_buscarUsuarios() {
             this.usuarios = []
-            this.selecionado = []
             return this.$axios
                 .get('/usuarios/', {
                     params: {

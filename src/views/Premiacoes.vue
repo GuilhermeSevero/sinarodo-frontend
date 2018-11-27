@@ -256,7 +256,7 @@ export default {
             }
 
             if (this.filtros.encarregado.length) {
-                config.params.encarregado = true
+                config.params.encarregado = 'True'
             }
             return config
         },
