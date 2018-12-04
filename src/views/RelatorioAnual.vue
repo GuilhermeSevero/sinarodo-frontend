@@ -2,11 +2,12 @@
     <div>
         <q-table
             :title="titulorelatorio"
-            :data="dadosanual"
+            :data="dadosAnual"
             :columns="colunas"
             :pagination="{rowsNumber: 0}"
             :rows-per-page-options="[]"
         />
+        <p>{{ premioTotal }}</p>
         <p><br><br><br>
             <center> <table border="0">
                 <tr>
@@ -39,7 +40,8 @@ export default {
 
     data() {
         return {
-            dadosanual: [],
+            premioTotal: 0,
+            dadosAnual: [],
             colunas: [
                 {
                     name: 'nome',
@@ -92,7 +94,7 @@ export default {
 
     methods: {
         $_buscarDados() {
-            this.dadosanual = [
+            this.dadosAnual = [
                 {
                     usuario: {
                         nome: 'Guilherme',
@@ -332,6 +334,10 @@ export default {
             //     .catch(erro => {
 
             //     })
+
+            this.premioTotal = this.dadosAnual.reduce((soma, atual) => {
+                return soma + atual.valor_premio
+            }, 0)
         }
     }
 }

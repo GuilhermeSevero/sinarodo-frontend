@@ -40,8 +40,16 @@
                     push
                     color="primary"
                     icon="print"
-                    label="Imprimir"
-                    @click="$_imprimirRelatorio"
+                    label="Imprimir por mês"
+                    @click="$_imprimirRelatorioMensal"
+                />
+                <q-btn
+                    id="btnImprimir"
+                    push
+                    color="primary"
+                    icon="print"
+                    label="Imprimir por anual"
+                    @click="$_imprimirRelatorioAnual"
                 />
             </q-btn-group>
         </div>
@@ -84,10 +92,17 @@ export default {
     },
 
     methods: {
-        $_imprimirRelatorio() {
+        $_imprimirRelatorioMensal() {
             this.$v.$touch()
             if (!this.$v.$error) {
-                this.$router.push(`/relatorios/mensais/${this.mes}/${this.ano}`)
+                this.$router.push(`/relatorios/mensal/${this.mes}/${this.ano}`)
+            }
+        },
+
+        $_imprimirRelatorioAnual() {
+            this.$v.$touch()
+            if (!this.$v.$error) {
+                this.$router.push(`/relatorios/anual/${this.ano}`)
             }
         }
     }
