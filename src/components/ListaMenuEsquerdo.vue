@@ -42,6 +42,13 @@
             </q-item>
             <q-item
                 v-if="validarNivel(1, 2)"
+                to="/relatorios"
+            >
+                <q-item-side icon="print" />
+                <q-item-main label="Relatórios" />
+            </q-item>
+            <q-item
+                v-if="validarNivel(1, 2)"
                 to="/usuarios"
             >
                 <q-item-side icon="account_box" />
