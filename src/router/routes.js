@@ -164,6 +164,28 @@ export default [
     },
 
     {
+        path: '/relatorios/mensal/:mes/:ano',
+        name: 'RelatorioMensal',
+        component: () => import('../views/RelatorioMensal'),
+        hidden: true,
+        meta: {
+            auth: true,
+            possuiNivel: login.validarNivel(1, 2)
+        }
+    },
+
+    {
+        path: '/relatorios/anual/:ano',
+        name: 'RelatorioAnual',
+        component: () => import('../views/RelatorioAnual'),
+        hidden: true,
+        meta: {
+            auth: true,
+            possuiNivel: login.validarNivel(1, 2)
+        }
+    },
+
+    {
         path: '*',
         name: 'Página de erro',
         component: () => import('../views/404'),
