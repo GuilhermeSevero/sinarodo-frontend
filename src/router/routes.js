@@ -11,7 +11,7 @@ import Premiacao from '../views/Premiacao'
 import Usuarios from '../views/Usuarios'
 import Usuario from '../views/Usuario'
 import Configuracoes from '../views/Configuracoes'
-import RelatoriosMensais from '../views/RelatoriosMensais'
+import Relatorios from '../views/Relatorios'
 
 export default [
     {
@@ -140,9 +140,9 @@ export default [
                 }
             },
             {
-                path: '/relatorios/mensais',
+                path: '/relatorios',
                 name: 'relatoriosMensais',
-                component: RelatoriosMensais,
+                component: Relatorios,
                 meta: {
                     title: 'Relatório',
                     subtitle: 'Página de relatório mensal',
