@@ -11,6 +11,7 @@ import Premiacao from '../views/Premiacao'
 import Usuarios from '../views/Usuarios'
 import Usuario from '../views/Usuario'
 import Configuracoes from '../views/Configuracoes'
+import RelatoriosMensais from '../views/RelatoriosMensais'
 
 export default [
     {
@@ -136,6 +137,17 @@ export default [
                     subtitle: 'Página de manutenção das configurações do sistema',
                     auth: true,
                     possuiNivel: login.validarNivel(1)
+                }
+            },
+            {
+                path: '/relatorios/mensais',
+                name: 'relatoriosMensais',
+                component: RelatoriosMensais,
+                meta: {
+                    title: 'Relatório',
+                    subtitle: 'Página de relatório mensal',
+                    auth: true,
+                    possuiNivel: login.validarNivel(1, 2)
                 }
             }
         ]
