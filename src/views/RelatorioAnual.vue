@@ -7,8 +7,16 @@
             :pagination="{rowsNumber: 0}"
             :rows-per-page-options="[]"
         />
-        <p>{{ premioTotal }}</p>
-        <p><br><br><br>
+        <br>
+        <p>
+            <center> <table border="0">
+                <tr>
+                    <font
+                        size="5"
+                        face="Arial"> Premiação total paga neste ano foi: <font color="red">R${{ premioTotal }} </font>
+        </font></tr></table></center></p><br><br><br><br>
+        <p>
+
             <center> <table border="0">
                 <tr>
                     <td> <center> <hr
@@ -40,7 +48,7 @@ export default {
 
     data() {
         return {
-            premioTotal: 0,
+            premioTotal: [],
             dadosAnual: [],
             colunas: [
                 {
@@ -72,6 +80,7 @@ export default {
                     format: val => `R$ ${val}`
 
                 }
+
             ]
         }
     },
