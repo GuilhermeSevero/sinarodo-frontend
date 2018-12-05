@@ -31,7 +31,7 @@
                     />
                 </q-field>
             </div>
-            <div class="col-md-6">
+            <div class="col-12">
                 <q-btn-group
                     class="btn-group q-my-xs"
                     outline
@@ -41,18 +41,24 @@
                         push
                         color="primary"
                         icon="assessment"
-                        label="Mensal"
-                        @click="$_imprimirRelatorioMensal"
-                    />
-                    <q-btn
-                        id="btnImprimir"
-                        push
-                        color="primary"
-                        icon="assessment"
-                        label="Anual"
-                        @click="$_imprimirRelatorioAnual"
+                        label="Buscar"
+                        @click="$_imprimirRelatorioUsuario"
                     />
                 </q-btn-group>
+            </div>
+            <div
+                v-if="dados"
+                class="col-12 row justify-center"
+            >
+                <q-jumbotron>
+                    <div class="q-display-2">{{ titulo }}</div>
+                    <hr class="q-hr q-my-lg">
+                    <div class="">
+                        <div class="q-title q-mb-md">{{ diasEmCampo }}</div>
+                        <div class="q-title q-mb-md">{{ notaMedia }}</div>
+                        <div class="q-title q-mb-md">{{ valorPremio }}</div>
+                    </div>
+                </q-jumbotron>
             </div>
         </div>
     </q-page>
@@ -60,8 +66,12 @@
 
 <script>
 import { required } from 'vuelidate/lib/validators'
+import { mask } from 'vue-the-mask'
+
 export default {
     name: 'PageRelatoriosMensais',
+
+    directives: { mask },
 
     data() {
         return {
@@ -70,7 +80,8 @@ export default {
             meses: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(element => ({
                 value: element,
                 label: element
-            }))
+            })),
+            dados: null
         }
     },
 
@@ -85,6 +96,26 @@ export default {
                 })
             }
             return lista
+        },
+
+        idUsuario() {
+            return this.$login.usuarioLogado().id
+        },
+
+        titulo() {
+            return `Dados em ${this.mes}/${this.ano}`
+        },
+
+        diasEmCampo() {
+            return `Dias em campo: ${this.dados.dias_em_campo ? this.dados.dias_em_campo : 0}`
+        },
+
+        notaMedia() {
+            return `Nota média: ${this.dados.nota_media ? this.dados.nota_media : 0}`
+        },
+
+        valorPremio() {
+            return `Valor prêmio: ${this.dados.valor_premio ? this.dados.valor_premio : 0}`
         }
     },
 
@@ -94,17 +125,27 @@ export default {
     },
 
     methods: {
-        $_imprimirRelatorioMensal() {
+        $_imprimirRelatorioUsuario() {
             this.$v.$touch()
             if (!this.$v.$error) {
-                this.$router.push(`/relatorios/mensal/${this.mes}/${this.ano}`)
-            }
-        },
-
-        $_imprimirRelatorioAnual() {
-            this.$v.ano.$touch()
-            if (!this.$v.ano.$error) {
-                this.$router.push(`/relatorios/anual/${this.ano}`)
+                this.$axios
+                    .get('/premiacoes/relatorio_usuario/', {
+                        params: {
+                            ano: this.ano,
+                            mes: this.mes,
+                            usuario: this.idUsuario
+                        }
+                    })
+                    .then(({ data }) => {
+                        this.dados = data
+                    })
+                    .catch(erro => {
+                        this.$notify.error({
+                            title: 'Erro ao consultar',
+                            message: 'Não foi possível realizar a consulta dos dados!',
+                            apiError: erro
+                        })
+                    })
             }
         }
     }

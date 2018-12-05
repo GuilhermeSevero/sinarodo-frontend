@@ -48,6 +48,13 @@
                 <q-item-main label="Relatórios" />
             </q-item>
             <q-item
+                v-if="validarNivel(3)"
+                to="/relatorios/usuario"
+            >
+                <q-item-side icon="print" />
+                <q-item-main label="Relatórios" />
+            </q-item>
+            <q-item
                 v-if="validarNivel(1, 2)"
                 to="/usuarios"
             >

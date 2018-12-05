@@ -1,22 +1,15 @@
 <template>
     <div>
         <q-table
-            :title="titulorelatorio"
-            :data="dadosAnual"
+            :title="tituloRelatorio"
+            :data="dados"
             :columns="colunas"
-            :pagination="{rowsNumber: 0}"
+            :pagination="{ rowsNumber: 0 }"
             :rows-per-page-options="[]"
         />
         <br>
+        <br><br><br><br>
         <p>
-            <center> <table border="0">
-                <tr>
-                    <font
-                        size="5"
-                        face="Arial"> Premiação total paga neste ano foi: <font color="red">R${{ premioTotal }} </font>
-        </font></tr></table></center></p><br><br><br><br>
-        <p>
-
             <center> <table border="0">
                 <tr>
                     <td> <center> <hr
@@ -48,14 +41,13 @@ export default {
 
     data() {
         return {
-            premioTotal: [],
-            dadosAnual: [],
+            dados: [],
             colunas: [
                 {
                     name: 'nome',
                     label: 'Nome',
                     align: 'left',
-                    field: item => item.usuario.nome
+                    field: 'nome'
 
                 },
                 {
@@ -71,28 +63,18 @@ export default {
                     align: 'left',
                     field: 'dias_em_campo'
 
-                },
-                {
-                    name: 'valor',
-                    label: 'Prêmio (R$)',
-                    align: 'left',
-                    field: 'valor_premio',
-                    format: val => `R$ ${val}`
-
                 }
-
             ]
         }
     },
 
     computed: {
-
         anoPeriodo() {
             return this.$route.params.ano
         },
 
-        titulorelatorio() {
-            return 'Relatório Anual ' + this.anoPeriodo
+        tituloRelatorio() {
+            return `Relatório Anual ${this.anoPeriodo}`
         }
 
     },
@@ -103,250 +85,28 @@ export default {
 
     methods: {
         $_buscarDados() {
-            this.dadosAnual = [
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 7.5,
-                    dias_em_campo: 18,
-                    valor_premio: 600.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'teste',
-                        email: 'teste@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'teste',
-                        email: 'teste@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'teste',
-                        email: 'teste@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'teste',
-                        email: 'teste@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'teste',
-                        email: 'teste@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'teste',
-                        email: 'teste@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'teste',
-                        email: 'teste@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'teste',
-                        email: 'teste@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'teste',
-                        email: 'teste@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                }
-            ]
-            // this.$http
-            //     .get('/relatorios/premiacoes/mensal/', {
-            //         params: {
-            //             mes: this.mesPeriodo,
-            //             ano: this.anoPeriodo
-            //         }
-            //     })
-            //     .then(resposta => {
-            //         this.dados = resposta.data
-            //     })
-            //     .catch(erro => {
+            this.$axios
+                .get('/premiacoes/relatorio_anual/', {
+                    params: {
+                        ano: this.anoPeriodo
+                    }
+                })
+                .then(({ data }) => {
+                    this.dados = data
 
-            //     })
-
-            this.premioTotal = this.dadosAnual.reduce((soma, atual) => {
-                return soma + atual.valor_premio
-            }, 0)
+                    this.$nextTick(() => {
+                        print()
+                        this.$router.back()
+                    })
+                })
+                .catch(erro => {
+                    this.$notify.error({
+                        title: 'Erro na impressão',
+                        message: 'Não foi possível realizar a impressão do relatório!',
+                        apiError: erro
+                    })
+                    this.$router.back()
+                })
         }
     }
 }

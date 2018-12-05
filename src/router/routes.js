@@ -12,6 +12,7 @@ import Usuarios from '../views/Usuarios'
 import Usuario from '../views/Usuario'
 import Configuracoes from '../views/Configuracoes'
 import Relatorios from '../views/Relatorios'
+import RelatoriosUsuario from '../views/RelatoriosUsuario'
 
 export default [
     {
@@ -145,9 +146,20 @@ export default [
                 component: Relatorios,
                 meta: {
                     title: 'Relatório',
-                    subtitle: 'Página de relatório mensal',
+                    subtitle: 'Página de definição de relatórios',
                     auth: true,
                     possuiNivel: login.validarNivel(1, 2)
+                }
+            },
+            {
+                path: '/relatorios/usuario',
+                name: 'relatoriosUsuario',
+                component: RelatoriosUsuario,
+                meta: {
+                    title: 'Relatório',
+                    subtitle: 'Página de definição de relatórios',
+                    auth: true,
+                    possuiNivel: login.validarNivel(1, 2, 3)
                 }
             }
         ]

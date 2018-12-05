@@ -1,10 +1,17 @@
 <template>
     <q-page class="layout-page">
         <div
-            v-if="!registroNovo"
             class="row justify-end"
         >
+            <q-chip
+                v-if="registroNovo"
+                class="q-subheading"
+                color="primary"
+            >
+                Senha padrão: "12345678"
+            </q-chip>
             <q-btn
+                v-else
                 id="btnReiniciarSenha"
                 push
                 color="primary"
@@ -21,7 +28,7 @@
             :validador="this.$v"
             :modifica-parametros="$_modificaParametros"
         >
-            <div class="col-mmd-6">
+            <div class="col-md-6">
                 <q-field class="g-form-filtro-field">
                     <q-input
                         id="inpID"
@@ -31,7 +38,7 @@
                     />
                 </q-field>
             </div>
-            <div class="col-mmd-6">
+            <div class="col-md-6">
                 <q-field
                     class="g-form-filtro-field"
                     :count="10"
@@ -46,7 +53,7 @@
                     />
                 </q-field>
             </div>
-            <div class="col-mmd-6">
+            <div class="col-md-6">
                 <q-field
                     class="g-form-filtro-field"
                     error-label="Digite o nome"
@@ -63,7 +70,7 @@
                     />
                 </q-field>
             </div>
-            <div class="col-mmd-6">
+            <div class="col-md-6">
                 <q-field
                     class="g-form-filtro-field"
                     :count="50"
@@ -77,7 +84,7 @@
                     />
                 </q-field>
             </div>
-            <div class="col-mmd-6">
+            <div class="col-md-6">
                 <q-field
                     class="g-form-filtro-field"
                     error-label="Digite o login"
@@ -94,7 +101,7 @@
                     />
                 </q-field>
             </div>
-            <div class="col-mmd-6">
+            <div class="col-md-6">
                 <q-field
                     class="g-form-filtro-field"
                     error-label="Digite um e-mail válido"
@@ -112,7 +119,7 @@
                     />
                 </q-field>
             </div>
-            <div class="col-mmd-6">
+            <div class="col-md-6">
                 <q-field class="g-form-filtro-field">
                     <q-input
                         id="inpTelefone"
@@ -124,7 +131,7 @@
                     />
                 </q-field>
             </div>
-            <div class="col-mmd-6">
+            <div class="col-md-6">
                 <q-field class="g-form-filtro-field">
                     <q-input
                         id="inpCpf"
@@ -136,7 +143,7 @@
                     />
                 </q-field>
             </div>
-            <div class="col-mmd-6">
+            <div class="col-md-6">
                 <q-field
                     class="g-form-filtro-field"
                     error-label="Digite uma função"
@@ -153,7 +160,7 @@
                     />
                 </q-field>
             </div>
-            <div class="col-mmd-6">
+            <div class="col-md-6">
                 <q-field
                     class="g-form-filtro-field"
                     :count="30"

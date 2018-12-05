@@ -13,7 +13,7 @@
                 <tr>
                     <font
                         size="5"
-                        face="Arial"> Premiação total paga neste ano foi: <font color="red">R${{ premioTotal }} </font>
+                        face="Arial"> Premiação total paga neste mês foi: <font color="red">R${{ premioTotal }} </font>
         </font></tr></table></center></p><br><br><br><br>
         <p>
 
@@ -48,14 +48,14 @@ export default {
 
     data() {
         return {
-            premioTotal: [],
+            premioTotal: 0,
             dados: [],
             colunas: [
                 {
                     name: 'nome',
                     label: 'Nome',
                     align: 'left',
-                    field: item => item.usuario.nome
+                    field: 'nome'
 
                 },
                 {
@@ -105,249 +105,32 @@ export default {
 
     methods: {
         $_buscarDados() {
-            this.dados = [
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                },
-                {
-                    usuario: {
-                        nome: 'Guilherme',
-                        email: 'guilherme@teste.com.br'
-                    },
-                    nota_media: 9.5,
-                    dias_em_campo: 16,
-                    valor_premio: 800.0
-                }
-            ]
-            // this.$http
-            //     .get('/relatorios/premiacoes/mensal/', {
-            //         params: {
-            //             mes: this.mesPeriodo,
-            //             ano: this.anoPeriodo
-            //         }
-            //     })
-            //     .then(resposta => {
-            //         this.dados = resposta.data
-            //     })
-            //     .catch(erro => {
+            this.$axios
+                .get('/premiacoes/relatorio_mensal/', {
+                    params: {
+                        mes: this.mesPeriodo,
+                        ano: this.anoPeriodo
+                    }
+                })
+                .then(({ data }) => {
+                    this.dados = data
+                    this.premioTotal = data.reduce((soma, atual) => {
+                        return soma + atual.valor_premio
+                    }, 0)
 
-            //     })
-            this.premioTotal = this.dadosAnual.reduce((soma, atual) => {
-                return soma + atual.valor_premio
-            }, 0)
+                    this.$nextTick(() => {
+                        print()
+                        this.$router.back()
+                    })
+                })
+                .catch(erro => {
+                    this.$notify.error({
+                        title: 'Erro na impressão',
+                        message: 'Não foi possível realizar a impressão do relatório!',
+                        apiError: erro
+                    })
+                    this.$router.back()
+                })
         }
     }
 }

@@ -8,7 +8,7 @@
             :validador="this.$v"
             :modifica-parametros="$_modificaParametros"
         >
-            <div class="col-mmd-6">
+            <div class="col-md-6">
                 <q-field class="g-form-filtro-field">
                     <q-input
                         id="inpID"
@@ -18,7 +18,7 @@
                     />
                 </q-field>
             </div>
-            <div class="col-mmd-6">
+            <div class="col-md-6">
                 <q-field
                     class="g-form-filtro-field"
                 >
@@ -32,7 +32,7 @@
                     />
                 </q-field>
             </div>
-            <div class="col-mmd-6">
+            <div class="col-md-6">
                 <q-field
                     class="g-form-filtro-field"
                     :count="20"
@@ -50,7 +50,7 @@
                     />
                 </q-field>
             </div>
-            <div class="col-mmd-6">
+            <div class="col-md-6">
                 <q-field
                     class="g-form-filtro-field"
                     error-label="Digite a data de inicio da obra"
@@ -68,7 +68,7 @@
                     />
                 </q-field>
             </div>
-            <div class="col-mmd-6">
+            <div class="col-md-6">
                 <q-field
                     class="g-form-filtro-field"
                     error-label="Digite a data de fim da obra"
@@ -86,7 +86,7 @@
                     />
                 </q-field>
             </div>
-            <div class="col-mmd-6">
+            <div class="col-md-6">
                 <q-field
                     class="g-form-filtro-field"
                     :count="300"

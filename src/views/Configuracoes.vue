@@ -9,7 +9,7 @@
             :show-cancelar="false"
             :id-registro="idRegistroConfiguracao"
         >
-            <div class="col-mmd-6">
+            <div class="col-md-6">
                 <q-field
                     class="g-form-filtro-field"
                     error-label="Digite o valor do acréscimo"
@@ -26,7 +26,7 @@
                     />
                 </q-field>
             </div>
-            <div class="col-mmd-6">
+            <div class="col-md-6">
                 <q-field
                     class="g-form-filtro-field"
                     error-label="Digite o mínimo de dias em campo"
@@ -43,7 +43,7 @@
                     />
                 </q-field>
             </div>
-            <div class="col-mmd-6">
+            <div class="col-md-6">
                 <q-field
                     class="g-form-filtro-field"
                     error-label="Digite a premiação para SEIS pontos"
@@ -60,7 +60,7 @@
                     />
                 </q-field>
             </div>
-            <div class="col-mmd-6">
+            <div class="col-md-6">
                 <q-field
                     class="g-form-filtro-field"
                     error-label="Digite a premiação para SETE pontos"
@@ -77,7 +77,7 @@
                     />
                 </q-field>
             </div>
-            <div class="col-mmd-6">
+            <div class="col-md-6">
                 <q-field
                     class="g-form-filtro-field"
                     error-label="Digite a premiação para OITO pontos"
@@ -94,7 +94,7 @@
                     />
                 </q-field>
             </div>
-            <div class="col-mmd-6">
+            <div class="col-md-6">
                 <q-field
                     class="g-form-filtro-field"
                     error-label="Digite a premiação para NOVE pontos"
@@ -111,7 +111,7 @@
                     />
                 </q-field>
             </div>
-            <div class="col-mmd-6">
+            <div class="col-md-6">
                 <q-field
                     class="g-form-filtro-field"
                     error-label="Digite a premiação para DEZ pontos"

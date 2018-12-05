@@ -7,7 +7,7 @@
             :registro-novo="registroNovo"
             :validador="this.$v"
         >
-            <div class="col-mmd-6">
+            <div class="col-md-6">
                 <q-field class="g-form-filtro-field">
                     <q-input
                         id="inpID"
@@ -17,7 +17,7 @@
                     />
                 </q-field>
             </div>
-            <div class="col-mmd-6">
+            <div class="col-md-6">
                 <q-field
                     class="g-form-filtro-field"
                     error-label="Digite uma descrição"
@@ -35,7 +35,7 @@
                     />
                 </q-field>
             </div>
-            <div class="col-mmd-6">
+            <div class="col-md-6">
                 <q-field
                     class="g-form-filtro-field"
                     error-label="Digite um peso"
