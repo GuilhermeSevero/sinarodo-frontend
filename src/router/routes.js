@@ -13,6 +13,7 @@ import Usuario from '../views/Usuario'
 import Configuracoes from '../views/Configuracoes'
 import Relatorios from '../views/Relatorios'
 import RelatoriosUsuario from '../views/RelatoriosUsuario'
+import Sobre from '../views/Sobre'
 
 export default [
     {
@@ -157,7 +158,18 @@ export default [
                 component: RelatoriosUsuario,
                 meta: {
                     title: 'Relatório',
-                    subtitle: 'Página de definição de relatórios',
+                    subtitle: 'Página de relatórios do usuário',
+                    auth: true,
+                    possuiNivel: login.validarNivel(1, 2, 3)
+                }
+            },
+            {
+                path: '/sobre',
+                name: 'paginaSobre',
+                component: Sobre,
+                meta: {
+                    title: 'Sobre',
+                    subtitle: '',
                     auth: true,
                     possuiNivel: login.validarNivel(1, 2, 3)
                 }

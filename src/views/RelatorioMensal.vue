@@ -1,11 +1,13 @@
 <template>
     <div>
         <q-table
+            id="tbRelatorioMensal"
             :title="titulorelatorio"
             :data="dados"
             :columns="colunas"
             :pagination="{rowsNumber: 0}"
             :rows-per-page-options="[]"
+            :pagination-label="(start, end, total) => ''"
         />
         <br>
         <p>
@@ -13,7 +15,7 @@
                 <tr>
                     <font
                         size="5"
-                        face="Arial"> Premiação total paga neste mês foi: <font color="red">R${{ premioTotal }} </font>
+                        face="Arial"> Premiação total paga neste mês foi: <font color="red">R$ {{ premioTotal }} </font>
         </font></tr></table></center></p><br><br><br><br>
         <p>
 
@@ -52,33 +54,41 @@ export default {
             dados: [],
             colunas: [
                 {
-                    name: 'nome',
-                    label: 'Nome',
+                    name: 'id',
+                    label: 'Código',
                     align: 'left',
-                    field: 'nome'
-
+                    field: row => row.usuario.id
+                },
+                {
+                    name: 'usuario__matricula',
+                    label: 'Matrícula',
+                    align: 'left',
+                    field: row => row.usuario.matricula
+                },
+                {
+                    name: 'usuario__nome',
+                    label: 'Colaborador',
+                    align: 'left',
+                    field: row => row.usuario.nome
                 },
                 {
                     name: 'nota',
-                    label: 'Nota',
+                    label: 'Nota Média',
                     align: 'left',
                     field: 'nota_media'
-
                 },
                 {
                     name: 'dias',
-                    label: 'Dias Trabalhados',
-                    align: 'left',
+                    label: 'Dias em Campo',
+                    align: 'center',
                     field: 'dias_em_campo'
-
                 },
                 {
                     name: 'valor',
                     label: 'Prêmio (R$)',
                     align: 'left',
                     field: 'valor_premio',
-                    format: val => `R$ ${val}`
-
+                    format: val => `R$ ${val.toFixed(2)}`
                 }
             ]
         }
@@ -94,7 +104,7 @@ export default {
         },
 
         titulorelatorio() {
-            return 'Relatório Mensal ' + this.mesPeriodo + '/' + this.anoPeriodo
+            return `Relatório Mensal - ${this.mesPeriodo}/${this.anoPeriodo}`
         }
 
     },
@@ -116,7 +126,7 @@ export default {
                     this.dados = data
                     this.premioTotal = data.reduce((soma, atual) => {
                         return soma + atual.valor_premio
-                    }, 0)
+                    }, 0).toFixed(2)
 
                     this.$nextTick(() => {
                         print()
@@ -137,5 +147,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>

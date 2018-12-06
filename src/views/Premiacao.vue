@@ -37,7 +37,7 @@
                 <div
                     class="col-12 row q-my-md"
                 >
-                    <div class="c-header-dados q-headline col-12">Nota Final: {{ dados.nota_final }}</div>
+                    <div class="c-header-dados q-headline col-12 text-primary">Nota Final: {{ dados.nota_final }}</div>
                     <div class="col-12">
                         <div class="c-dados"><span class="c-titulo-dados q-subheading">Observação:</span> {{ dados.observacao }}</div>
                     </div>

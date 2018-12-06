@@ -6,6 +6,7 @@
             :columns="colunas"
             :pagination="{ rowsNumber: 0 }"
             :rows-per-page-options="[]"
+            :pagination-label="(start, end, total) => ''"
         />
         <br>
         <br><br><br><br>
@@ -44,25 +45,34 @@ export default {
             dados: [],
             colunas: [
                 {
-                    name: 'nome',
-                    label: 'Nome',
+                    name: 'id',
+                    label: 'Código',
                     align: 'left',
-                    field: 'nome'
-
+                    field: row => row.usuario.id
+                },
+                {
+                    name: 'usuario__matricula',
+                    label: 'Matrícula',
+                    align: 'left',
+                    field: row => row.usuario.matricula
+                },
+                {
+                    name: 'usuario__nome',
+                    label: 'Colaborador',
+                    align: 'left',
+                    field: row => row.usuario.nome
                 },
                 {
                     name: 'nota',
-                    label: 'Nota',
+                    label: 'Nota Média',
                     align: 'left',
                     field: 'nota_media'
-
                 },
                 {
                     name: 'dias',
-                    label: 'Dias Trabalhados',
-                    align: 'left',
+                    label: 'Dias em Campo',
+                    align: 'center',
                     field: 'dias_em_campo'
-
                 }
             ]
         }
@@ -74,7 +84,7 @@ export default {
         },
 
         tituloRelatorio() {
-            return `Relatório Anual ${this.anoPeriodo}`
+            return `Relatório Anual - ${this.anoPeriodo}`
         }
 
     },
@@ -112,6 +122,8 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-
+<style lang="scss">
+.q-table-bottom .q-table-control {
+    display: none !important;
+}
 </style>

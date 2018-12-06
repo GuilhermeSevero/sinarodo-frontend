@@ -69,6 +69,13 @@
                 <q-item-side icon="settings" />
                 <q-item-main label="Configurações" />
             </q-item>
+            <q-item
+                v-if="validarNivel(1, 2, 3)"
+                to="/sobre"
+            >
+                <q-item-side icon="not_listed_location" />
+                <q-item-main label="Sobre" />
+            </q-item>
         </q-list>
     </q-list>
 </template>

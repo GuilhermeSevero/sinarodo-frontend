@@ -41,7 +41,7 @@
                         push
                         color="primary"
                         icon="assessment"
-                        label="Buscar"
+                        label="Calcular"
                         @click="$_imprimirRelatorioUsuario"
                     />
                 </q-btn-group>
@@ -50,14 +50,14 @@
                 v-if="dados"
                 class="col-12 row justify-center"
             >
-                <q-jumbotron>
-                    <div class="q-display-2">{{ titulo }}</div>
+                <q-jumbotron class="col-md-6">
+                    <div class="c-header-dados q-headline">{{ titulo }}</div>
+                    <!-- <hr class="q-hr q-my-lg"> -->
+                    <div class="c-dados"><span class="c-titulo-dados q-subheading">Dias em campo:</span> {{ diasEmCampo }}</div>
+                    <div class="c-dados"><span class="c-titulo-dados q-subheading">Nota média:</span> {{ notaMedia }}</div>
+                    <div class="c-dados text-primary"><span class="c-titulo-dados q-subheading">Valor prêmio:</span>R$ {{ valorPremio }}</div>
                     <hr class="q-hr q-my-lg">
-                    <div class="">
-                        <div class="q-title q-mb-md">{{ diasEmCampo }}</div>
-                        <div class="q-title q-mb-md">{{ notaMedia }}</div>
-                        <div class="q-title q-mb-md">{{ valorPremio }}</div>
-                    </div>
+                    <div class="c-dados q-caption">Calculado em: {{ diaAtual }}</div>
                 </q-jumbotron>
             </div>
         </div>
@@ -67,6 +67,7 @@
 <script>
 import { required } from 'vuelidate/lib/validators'
 import { mask } from 'vue-the-mask'
+import { date } from 'quasar'
 
 export default {
     name: 'PageRelatoriosMensais',
@@ -89,7 +90,7 @@ export default {
         anos() {
             let anoCorrente = (new Date()).getFullYear()
             let lista = []
-            for (let index = 2010; index < anoCorrente + 10; index++) {
+            for (let index = 2010; index <= anoCorrente + 10; index++) {
                 lista.push({
                     value: index,
                     label: index
@@ -102,20 +103,28 @@ export default {
             return this.$login.usuarioLogado().id
         },
 
+        nomeUsuario() {
+            return this.$login.usuarioLogado().apelido ? this.$login.usuarioLogado().apelido : this.$login.usuarioLogado().nome
+        },
+
         titulo() {
-            return `Dados em ${this.mes}/${this.ano}`
+            return `${this.nomeUsuario}, seus dados em ${this.mes}/${this.ano} são:`
         },
 
         diasEmCampo() {
-            return `Dias em campo: ${this.dados.dias_em_campo ? this.dados.dias_em_campo : 0}`
+            return this.dados.dias_em_campo ? this.dados.dias_em_campo : 0
         },
 
         notaMedia() {
-            return `Nota média: ${this.dados.nota_media ? this.dados.nota_media : 0}`
+            return this.dados.nota_media ? this.dados.nota_media : 0
         },
 
         valorPremio() {
-            return `Valor prêmio: ${this.dados.valor_premio ? this.dados.valor_premio : 0}`
+            return (this.dados.valor_premio ? this.dados.valor_premio : 0).toFixed(2)
+        },
+
+        diaAtual() {
+            return date.formatDate(Date.now(), 'DD/MM/YYYY hh:mm:ss')
         }
     },
 
@@ -153,5 +162,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.c-header-dados {
+    font-weight: bold;
+    margin: 10px 0;
+}
 
+.c-dados {
+    margin: 5px 0 0 10px;
+}
+
+.c-titulo-dados {
+    font-weight: bold;
+    margin-right: 10px;
+}
 </style>
