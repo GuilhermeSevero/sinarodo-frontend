@@ -63,6 +63,7 @@
                 name="top-right"
                 :selecionado="selecionado.length > 0"
                 :chaveSelecionado="selecionado[0] ? selecionado[0][chave] : ''"
+                :objetoSelecionado="selecionado[0]"
             />
         </template>
     </q-table>

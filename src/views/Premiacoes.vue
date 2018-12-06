@@ -111,7 +111,7 @@
         </filter-box>
         <data-table
             ref="table"
-            url-base="/usuario_obra/"
+            :url-base="url"
             url-editar="/premiacoes/"
             chave="id"
             sort-padrao="obra__pedido"
@@ -119,6 +119,24 @@
             :define-filtros="$_defineFiltros"
             ocultar-insert
             visualizar-somente
+        >
+            <template
+                slot="top-right"
+                slot-scope="props"
+            >
+                <q-btn
+                    color="primary"
+                    label="Diminuir dias em campo"
+                    icon="card_giftcard"
+                    :disable="!props.selecionado"
+                    push
+                    @click="$_diminuirDiasEmCampo(props.objetoSelecionado.periodos)"
+                />
+            </template>
+        </data-table>
+        <modal-diminuir-dias-em-campo
+            ref="modalDiminuirDiasEmCampo"
+            :periodos="periodos"
         />
     </q-page>
 </template>
@@ -129,6 +147,7 @@ import { date } from 'quasar'
 import FilterBox from '../components/FilterBox'
 import DataTable from '../components/DataTable'
 import DatetimeRange from '../components/DatetimeRange'
+import ModalDiminuirDiasEmCampo from '../components/ModalDiminuirDiasEmCampo'
 
 export default {
     name: 'PagePremiacoes',
@@ -136,13 +155,18 @@ export default {
     components: {
         FilterBox,
         DataTable,
-        DatetimeRange
+        DatetimeRange,
+        ModalDiminuirDiasEmCampo
     },
 
     directives: { mask },
 
     data() {
         return {
+            url: '/usuario_obra/',
+
+            periodos: [],
+
             filtros: {
                 pedido: '',
                 lancamento: {
@@ -273,6 +297,11 @@ export default {
                 matriculaUsuario: '',
                 encarregado: []
             }
+        },
+
+        $_diminuirDiasEmCampo(periodos) {
+            this.periodos = periodos
+            this.$refs.modalDiminuirDiasEmCampo.open()
         }
     }
 }
