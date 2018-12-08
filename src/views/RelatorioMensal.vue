@@ -1,45 +1,68 @@
 <template>
-    <div>
+    <div
+        :class="{
+            'layout-page': $q.platform.is.mobile
+        }"
+    >
         <q-table
             id="tbRelatorioMensal"
             :title="titulorelatorio"
             :data="dados"
             :columns="colunas"
-            :pagination="{rowsNumber: 0}"
-            :rows-per-page-options="[]"
-            :pagination-label="(start, end, total) => ''"
+            hide-bottom
+            :pagination="{
+                rowsNumber: 0
+            }"
         />
         <br>
         <p>
-            <center> <table border="0">
-                <tr>
-                    <font
-                        size="5"
-                        face="Arial"> Premiação total paga neste mês foi: <font color="red">R$ {{ premioTotal }} </font>
-        </font></tr></table></center></p><br><br><br><br>
-        <p>
-
-            <center> <table border="0">
-                <tr>
-                    <td> <center> <hr
-                        align="center"
-                        width="300"
-                        size="1"
-                        color="black">
-                        Direção Operacional
-                    </center></td>&nbsp; &nbsp;
-
-                    <td> <center> <hr
-                        align="center"
-                        width="300"
-                        size="1"
-                        color="black">
-                        Gerente de Produção / Apontador
-                    </center></td>
-
-            </tr></table> </center>
-
+            <center>
+                <table border="0">
+                    <tr>
+                        <font
+                            size="5"
+                            face="Arial"
+                        >
+                            Premiação total paga: <font color="red">R$ {{ premioTotal }}</font>
+                        </font>
+                    </tr>
+                </table>
+            </center>
         </p>
+        <template v-if="$q.platform.is.desktop">
+            <br><br><br><br>
+            <p>
+                <center>
+                    <table border="0">
+                        <tr>
+                            <td>
+                                <center>
+                                    <hr
+                                        align="center"
+                                        width="300"
+                                        size="1"
+                                        color="black"
+                                    >
+                                    Direção Operacional
+                                </center>
+                            </td>
+                            &nbsp; &nbsp;
+                            <td>
+                                <center>
+                                    <hr
+                                        align="center"
+                                        width="300"
+                                        size="1"
+                                        color="black"
+                                    >
+                                    Gerente de Produção / Apontador
+                                </center>
+                            </td>
+                        </tr>
+                    </table>
+                </center>
+            </p>
+        </template>
     </div>
 
 </template>
@@ -128,10 +151,12 @@ export default {
                         return soma + atual.valor_premio
                     }, 0).toFixed(2)
 
-                    this.$nextTick(() => {
-                        print()
-                        this.$router.back()
-                    })
+                    if (this.$q.platform.is.desktop) {
+                        this.$nextTick(() => {
+                            print()
+                            this.$router.back()
+                        })
+                    }
                 })
                 .catch(erro => {
                     this.$notify.error({

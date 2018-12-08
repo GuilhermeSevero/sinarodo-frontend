@@ -111,6 +111,11 @@ export default {
             default: 'id'
         },
 
+        decrescente: {
+            type: Boolean,
+            default: false
+        },
+
         urlInserir: {
             type: String,
             default: ''
@@ -141,7 +146,7 @@ export default {
                 page: 1,
                 rowsNumber: 10,
                 sortBy: this.sortPadrao,
-                descending: false
+                descending: this.decrescente
             },
             suprimirErro: false
         }

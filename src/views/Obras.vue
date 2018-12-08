@@ -62,6 +62,7 @@
             url-base="/obras/"
             chave="id"
             sort-padrao="pedido"
+            :decrescente="true"
             :colunas="colunas"
             :define-filtros="$_defineFiltros"
         >

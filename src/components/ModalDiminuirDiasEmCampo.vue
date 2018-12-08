@@ -19,10 +19,10 @@
         >
             <div slot="header">
                 <q-toolbar>
-                    <div class="c-header-fk col-sm-7">
+                    <div class="c-header-fk col-md-7 col-xs-6">
                         <div class="q-title">{{ titulo }}</div>
                     </div>
-                    <div class="row justify-end col-sm-5">
+                    <div class="row justify-end col-md-5 col-xs-6">
                         <q-btn
                             id="btnLBConfirmInner"
                             icon="done"
@@ -77,7 +77,7 @@
                 </q-field>
             </div>
         </q-modal-layout>
-        <q-inner-loading :visible="loading">
+        <q-inner-loading :visible="carregando">
             <q-spinner
                 size="50px"
                 color="primary"
@@ -96,6 +96,11 @@ export default {
         periodos: {
             type: Array,
             default: () => []
+        },
+
+        idUsuarioObras: {
+            type: Number,
+            default: NaN
         }
     },
 
@@ -105,22 +110,15 @@ export default {
 
             lowResolution: false,
 
-            loading: false,
+            url: '/usuario_obra/',
+
+            carregando: false,
 
             periodosdefinidos: [],
 
             periodoSelecionado: {},
 
             quantidadeDias: 1
-        }
-    },
-
-    watch: {
-        periodos(value) {
-            this.periodosdefinidos = value.map(element => ({
-                label: `${element.mes_periodo}/${element.ano_periodo} - ${element.dias_em_campo} dias em campo`,
-                value: element
-            }))
         }
     },
 
@@ -142,13 +140,64 @@ export default {
     methods: {
         open() {
             this.quantidadeDias = 1
+            this.periodosdefinidos = this.periodos.map(element => ({
+                label: `${element.mes_periodo}/${element.ano_periodo} - ${element.dias_em_campo} dias em campo`,
+                value: element
+            }))
             this.$refs.modal.show()
         },
 
         $_confirmar() {
             this.$v.$touch()
             if (!this.$v.$error) {
-                alert('Finalizando implementação!')
+                if (this.quantidadeDias >= this.periodoSelecionado.dias_em_campo) {
+                    this.$notify.warning({
+                        title: 'Quantidade de Dias Inválido!',
+                        message: 'A quantidade de dias deve ser menor que o total de dias em campo.',
+                        duration: 5000
+                    })
+                } else {
+                    this.$_diminuirDias({
+                        quantidadeDias: this.quantidadeDias,
+                        periodo: this.periodoSelecionado
+                    })
+                    this.$refs.modal.hide()
+                }
+            }
+        },
+
+        $_diminuirDias({ quantidadeDias, periodo }) {
+            if (this.idUsuarioObras) {
+                this.carregando = true
+                this.$axios
+                    .patch(`${this.url}${this.idUsuarioObras}/diminuir_dias_em_campo/`, {
+                        mes_periodo: periodo.mes_periodo,
+                        ano_periodo: periodo.ano_periodo,
+                        dias: quantidadeDias
+                    })
+                    .then(() => {
+                        this.$notify.success({
+                            title: 'Dias em campo alterados',
+                            message: `Você diminuio ${quantidadeDias} dias em campo.`,
+                            duration: 3000
+                        })
+                        this.carregando = false
+                        this.$emit('diasDiminuidos')
+                    })
+                    .catch(erro => {
+                        this.$notify.error({
+                            title: 'Erro ao Alterar',
+                            message: 'Não foi possível diminuir os dias em campo!',
+                            apiError: erro
+                        })
+                        this.carregando = false
+                    })
+            } else {
+                this.$notify.warning({
+                    title: 'Registro não selecionado!',
+                    message: 'Selecione um registro para diminuir os dias trabalhados.',
+                    duration: 3000
+                })
             }
         }
     }

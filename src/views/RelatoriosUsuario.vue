@@ -78,6 +78,8 @@ export default {
         return {
             mes: (new Date()).getMonth() + 1,
             ano: (new Date()).getFullYear(),
+            anoView: 0,
+            mesView: 0,
             meses: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(element => ({
                 value: element,
                 label: element
@@ -108,7 +110,7 @@ export default {
         },
 
         titulo() {
-            return `${this.nomeUsuario}, seus dados em ${this.mes}/${this.ano} são:`
+            return `${this.nomeUsuario}, seus dados em ${this.mesView}/${this.anoView} são:`
         },
 
         diasEmCampo() {
@@ -137,11 +139,14 @@ export default {
         $_imprimirRelatorioUsuario() {
             this.$v.$touch()
             if (!this.$v.$error) {
+                this.anoView = this.ano
+                this.mesView = this.mes
+                this.dados = null
                 this.$axios
                     .get('/premiacoes/relatorio_usuario/', {
                         params: {
-                            ano: this.ano,
-                            mes: this.mes,
+                            ano: this.anoView,
+                            mes: this.mesView,
                             usuario: this.idUsuario
                         }
                     })
