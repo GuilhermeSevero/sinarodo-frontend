@@ -14,6 +14,21 @@
                 rowsNumber: 0
             }"
         />
+        <br>
+        <p>
+            <center>
+                <table border="0">
+                    <tr>
+                        <font
+                            size="5"
+                            face="Arial"
+                        >
+                            Premiação total paga: <font color="red">R$ {{ premioTotal }}</font>
+                        </font>
+                    </tr>
+                </table>
+            </center>
+        </p>
         <template v-if="$q.platform.is.desktop">
             <br><br><br><br><br>
             <p>
@@ -58,6 +73,9 @@ export default {
     data() {
         return {
             dados: [],
+
+            premioTotal: 0,
+
             colunas: [
                 {
                     name: 'id',
@@ -88,6 +106,12 @@ export default {
                     label: 'Dias em Campo',
                     align: 'center',
                     field: 'dias_em_campo'
+                },
+                {
+                    name: 'valor_premio',
+                    label: 'Premiação Total',
+                    align: 'left',
+                    field: (row) => `R$ ${row.valor_premio}`
                 }
             ]
         }
@@ -118,6 +142,11 @@ export default {
                 })
                 .then(({ data }) => {
                     this.dados = data
+
+                    this.premioTotal = data.reduce((soma, atual) => {
+                        return soma + atual.valor_premio
+                    }, 0).toFixed(2)
+
                     if (this.$q.platform.is.desktop) {
                         this.$nextTick(() => {
                             print()

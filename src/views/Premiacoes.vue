@@ -114,7 +114,7 @@
             :url-base="url"
             url-editar="/premiacoes/"
             chave="id"
-            sort-padrao="obra__pedido"
+            sort-padrao="obra_pedido"
             :decrescente="true"
             :colunas="colunas"
             :define-filtros="$_defineFiltros"
@@ -168,7 +168,7 @@ export default {
             dados: [],
             colunas: [
                 {
-                    name: 'obra__pedido',
+                    name: 'obra_pedido',
                     required: true,
                     label: 'Pedido',
                     align: 'left',
