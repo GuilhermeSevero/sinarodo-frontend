@@ -111,7 +111,8 @@ export default {
                     name: 'valor_premio',
                     label: 'Premiação Total',
                     align: 'left',
-                    field: (row) => `R$ ${row.valor_premio}`
+                    field: 'valor_premio',
+                    format: val => `R$ ${val.toFixed(2)}`
                 }
             ]
         }
