@@ -74,6 +74,15 @@
                     label="Configurações"
                     icon="settings"
                 />
+                <q-btn
+                    v-if="validarNivel(1)"
+                    to="/logs"
+                    color="primary"
+                    size="xl"
+                    class="q-ma-md"
+                    label="Logs"
+                    icon="outlined_flag"
+                />
             </div>
         </q-jumbotron>
     </q-page>

@@ -46,6 +46,7 @@
                     @click="$_alterarClick"
                 />
                 <q-btn
+                    v-if="!ocultarDelete"
                     color="primary"
                     label="Excluir"
                     icon="clear"
@@ -127,6 +128,11 @@ export default {
         },
 
         ocultarInsert: {
+            type: Boolean,
+            default: false
+        },
+
+        ocultarDelete: {
             type: Boolean,
             default: false
         },

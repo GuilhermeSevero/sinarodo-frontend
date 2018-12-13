@@ -7,6 +7,7 @@
                 outline
             >
                 <q-btn
+                    v-if="!ocultarSalvar"
                     id="btnSalvar"
                     push
                     color="primary"
@@ -15,7 +16,7 @@
                     @click="salvar"
                 />
                 <q-btn
-                    v-if="showCancelar"
+                    v-if="!ocultarCancelar"
                     id="btnCancelar"
                     push
                     icon="clear"
@@ -71,9 +72,14 @@ export default {
             default: 0
         },
 
-        showCancelar: {
+        ocultarSalvar: {
             type: Boolean,
-            default: true
+            default: false
+        },
+
+        ocultarCancelar: {
+            type: Boolean,
+            default: false
         }
     },
 
@@ -98,7 +104,7 @@ export default {
 
     methods: {
         $_voltar() {
-            if (this.showCancelar) {
+            if (!this.ocultarCancelar) {
                 this.$router.back()
             }
         },

@@ -14,6 +14,8 @@ import Configuracoes from '../views/Configuracoes'
 import Relatorios from '../views/Relatorios'
 import RelatoriosUsuario from '../views/RelatoriosUsuario'
 import Sobre from '../views/Sobre'
+import Logs from '../views/Logs'
+import Log from '../views/Log'
 
 export default [
     {
@@ -172,6 +174,28 @@ export default [
                     subtitle: '',
                     auth: true,
                     possuiNivel: login.validarNivel(1, 2, 3)
+                }
+            },
+            {
+                path: '/logs',
+                name: 'paginaLogs',
+                component: Logs,
+                meta: {
+                    title: 'Logs de Configurações',
+                    subtitle: 'Lista de Modifiações nas Configurações',
+                    auth: true,
+                    possuiNivel: login.validarNivel(1)
+                }
+            },
+            {
+                path: '/logs/:id',
+                name: 'log',
+                component: Log,
+                meta: {
+                    title: 'Log de Configurações',
+                    subtitle: 'Dados alterados nas configurações',
+                    auth: true,
+                    possuiNivel: login.validarNivel(1)
                 }
             }
         ]

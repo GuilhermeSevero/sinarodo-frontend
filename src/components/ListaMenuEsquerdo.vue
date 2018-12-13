@@ -70,6 +70,13 @@
                 <q-item-main label="Configurações" />
             </q-item>
             <q-item
+                v-if="validarNivel(1)"
+                to="/logs"
+            >
+                <q-item-side icon="outlined_flag" />
+                <q-item-main label="Logs" />
+            </q-item>
+            <q-item
                 v-if="validarNivel(1, 2, 3)"
                 to="/sobre"
             >

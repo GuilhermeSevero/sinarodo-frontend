@@ -6,8 +6,9 @@
             :parametros="parametros"
             :registro-novo="registroNovo"
             :validador="this.$v"
-            :show-cancelar="false"
             :id-registro="idRegistroConfiguracao"
+            :modifica-parametros="$_modificaParametros"
+            :ocultar-cancelar="true"
         >
             <div class="col-md-6">
                 <q-field
@@ -135,6 +136,7 @@
 <script>
 import { required } from 'vuelidate/lib/validators'
 import ContainerManutencao from '../components/ContainerManutencao'
+import login from '../plugins/login'
 
 export default {
     name: 'PageConfiguracoes',
@@ -192,6 +194,11 @@ export default {
                         })
                     }
                 })
+        },
+
+        $_modificaParametros(parametros) {
+            parametros.id_usuario = login.usuarioLogado().id
+            return parametros
         }
     }
 }
