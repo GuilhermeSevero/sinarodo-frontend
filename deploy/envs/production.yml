@@ -1,0 +1,25 @@
+version: '3.1'
+services:
+  app-sinarodo:
+    image: ${DCK_HOST}/${IMAGE_NAME}${IMAGE_TAG}
+    environment:
+      - API_SINARODO_URL=http://severo.tech:8080/api-sinarodo/v1/
+    networks:
+      - default
+      - proxy-apps
+    deploy:
+      labels:
+        - "traefik.port=80"
+        - "traefik.docker.network=proxy-apps"
+        - "traefik.frontend.rule=PathPrefix:/"
+        - "traefik.backend=app-sinarodo"
+    volumes:
+      - statics:/static
+
+networks:
+  proxy-apps:
+    external: true
+
+volumes:
+  statics:
+    driver: local
