@@ -1,6 +1,10 @@
 #!/usr/bin/env sh
 
 #===========================================
+# Instala o Serve
+npm install -g serve
+
+#===========================================
 # altera variaveis de ambiente
 # copia arquivos js para pasta temporária
 mkdir /dist/template_js
@@ -11,5 +15,5 @@ do
   envsubst '${API_SINARODO_URL}' < "/dist/template_js/$arq" > "/dist/js/$arq"
 done
 #===========================================
-# inicia o nginx
-nginx -g "daemon off;"
+# inicia o Serve
+serve -l 80 -s /dist/
