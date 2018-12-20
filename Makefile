@@ -13,7 +13,7 @@ push:
 	docker push $(DCK_HOST)/$(IMAGE_NAME):$(IMAGE_TAG)
 
 up:
-	docker stack deploy $(IMAGE_NAME)
+	docker stack deploy --compose-file docker-compose.yml $(IMAGE_NAME)
 
 down:
 	docker stack rm $(IMAGE_NAME)
