@@ -1,8 +1,9 @@
 version: '3.1'
 services:
   app-sinarodo-sandbox:
-    image: ${DCK_HOST}/${IMAGE_NAME}${IMAGE_TAG}
+    image: guisevero/appsinarodo:1.0.0
     environment:
       - API_SINARODO_URL=http://severo.tech:8080/api-sinarodo/v1/
     ports:
-     - "80:80"
+      - "80:80"
+

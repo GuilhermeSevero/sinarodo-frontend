@@ -1,10 +1,10 @@
-FROM alpine
+FROM node:10-alpine
 
 RUN mkdir /dist
-COPY frontend/dist/ /dist
+COPY dist/ /dist
 
 #arquivo que controla o start do compose
-ADD deploy/startup_control.sh /startup_control.sh
+ADD startup_control.sh /startup_control.sh
 
 #seta a permissão para conseguir rodar os scripts
 RUN chmod +x /startup_control.sh
