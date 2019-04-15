@@ -1,14 +1,10 @@
 import Router from '../router/index.js'
 import localStore from '../store/local.js'
 import sessionStore from '../store/session.js'
-import axios from 'axios'
 
 class Login {
     constructor () {
         this.$defineStorage()
-        this.axios = axios.create({
-            baseURL: process.env.VUE_APP_API_SINARODO
-        })
     }
 
     $defineStorage () {
@@ -46,7 +42,7 @@ class Login {
 
     $validarUsuario(login, senha) {
         return new Promise((resolve, reject) => {
-            this.axios
+            window.axios
                 .post('/usuarios/autenticar/', {
                     login: login,
                     password: senha
