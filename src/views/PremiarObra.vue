@@ -9,11 +9,43 @@
         >
             <!-- Passo 01 -->
             <q-step
-                title="Encarregado"
+                title="Cadastro"
                 name="encarregado"
                 default
                 :error="this.$v.parametros.encarregado.$error"
             >
+                <q-field
+                    class="g-form-filtro-field"
+                    error-label="Digite a data de inicio"
+                    :error="$v.parametros.data_inicio.$error"
+                >
+                    <q-datetime
+                        id="dateInicio"
+                        v-model="parametros.data_inicio"
+                        :max="parametros.data_final"
+                        type="date"
+                        float-label="Data Inicio"
+                        clearable
+                        format="DD/MM/YYYY"
+                        @blur="$v.parametros.data_inicio.$touch"
+                    />
+                </q-field>
+                <q-field
+                    class="g-form-filtro-field"
+                    error-label="Digite a data final"
+                    :error="$v.parametros.data_final.$error"
+                >
+                    <q-datetime
+                        id="dateFinal"
+                        v-model="parametros.data_final"
+                        :min="parametros.data_inicio"
+                        type="date"
+                        float-label="Data Final"
+                        clearable
+                        format="DD/MM/YYYY"
+                        @blur="$v.parametros.data_final.$touch"
+                    />
+                </q-field>
                 <q-field
                     class="g-form-filtro-field"
                     error-label="Selecione o encarregado da Obra"
@@ -28,7 +60,6 @@
                         autofocus-filter
                         filter-placeholder="Filtrar Usuário"
                         :options="usuarios"
-                        :disable="!podeAlterarEncarregado"
                     />
                 </q-field>
             </q-step>
@@ -130,6 +161,7 @@
 
 <script>
 import { required, minLength } from 'vuelidate/lib/validators'
+import { date } from 'quasar'
 
 export default {
     name: 'PagePremiar',
@@ -142,10 +174,10 @@ export default {
 
             usuarios: [],
 
-            podeAlterarEncarregado: true,
-
             parametros: {
                 encarregado: null,
+                data_inicio: null,
+                data_final: null,
                 usuarios: [],
                 categorias: [],
                 premiacao_observacao: ''
@@ -165,7 +197,9 @@ export default {
             usuarios: {
                 required,
                 minLength: minLength(1)
-            }
+            },
+            data_inicio: { required },
+            data_final: { required }
         }
     },
 
@@ -175,37 +209,39 @@ export default {
 
     methods: {
         $_modificaParametros(parametros) {
-            parametros.id_obra = this.idObra
+            let params = JSON.parse(JSON.stringify(parametros))
 
-            parametros.categorias.forEach(element => {
-                switch (element.nota) {
-                case 1:
-                    element.nota = 0
-                    break
-                case 2:
-                    element.nota = 5
-                    break
-                case 3:
-                    element.nota = 10
-                    break
-                default:
-                    element.nota = 0
-                    break
-                }
-            })
+            params.id_obra = this.idObra
+            params.data_inicio = date.formatDate(params.data_inicio, 'YYYY-MM-DD')
+            params.data_final = date.formatDate(params.data_final, 'YYYY-MM-DD')
 
-            if (!this.podeAlterarEncarregado) {
-                delete parametros.encarregado
-            }
-
-            return parametros
+            params.categorias
+                .forEach(element => {
+                    switch (element.nota) {
+                    case 2:
+                        element.nota = 5
+                        break
+                    case 3:
+                        element.nota = 10
+                        break
+                    default:
+                        element.nota = 0
+                        break
+                    }
+                })
+            return params
         },
 
         $_onStep(stepAtual) {
-            if (stepAtual === 'usuarios') {
+            switch (stepAtual) {
+            case 'usuarios':
                 this.$v.parametros.encarregado.$touch()
-            } else if (stepAtual === 'premiacao') {
+                this.$v.parametros.data_inicio.$touch()
+                this.$v.parametros.data_final.$touch()
+                break
+            case 'premiacao':
                 this.$v.parametros.usuarios.$touch()
+                break
             }
         },
 
@@ -214,9 +250,8 @@ export default {
                 this.$v.parametros.$touch()
                 if (!this.$v.parametros.$error) {
                     this.carregando = true
-                    let parametros = JSON.parse(JSON.stringify(this.parametros))
                     this.$axios
-                        .post('/obras/premiacao/', this.$_modificaParametros(parametros))
+                        .post('/obras/premiacao/', this.$_modificaParametros(this.parametros))
                         .then(retorno => {
                             this.$notify.success({
                                 title: 'Registro salvo',
@@ -251,20 +286,11 @@ export default {
         $_buscarDados() {
             this.carregando = true
             Promise.all([
-                this.$_buscarUsuarioObra(),
                 this.$_buscarUsuarios(),
                 this.$_buscaCategorias()
             ])
-                .then(respostas => {
-                    try {
-                        this.parametros.encarregado = respostas[0].data[0].id_usuario
-                        this.podeAlterarEncarregado = !respostas[0].data[0].id
-                    } catch (erro) {
-                        this.podeAlterarEncarregado = true
-                    }
-                    this.stepper = this.podeAlterarEncarregado ? 'encarregado' : 'usuarios'
-
-                    this.usuarios = respostas[1].data
+                .then(([usuarios, categorias]) => {
+                    this.usuarios = usuarios.data
                         .map(element => ({
                             label: `${element.matricula} - ${element.nome}`,
                             sublabel: `Função: ${element.funcao_1 ? element.funcao_1 : ''}${element.funcao_2 ? `/${element.funcao_2}` : ''}`,
@@ -272,7 +298,7 @@ export default {
                             value: element.id
                         }))
 
-                    this.parametros.categorias = respostas[2].data
+                    this.parametros.categorias = categorias.data
                         .map(element => ({
                             id: element.id,
                             descricao: element.descricao,
@@ -290,15 +316,6 @@ export default {
                     this.carregando = false
                     this.$router.back()
                 })
-        },
-
-        $_buscarUsuarioObra() {
-            return this.$axios.get(`/usuario_obra/`, {
-                params: {
-                    encarregado: 'True',
-                    id_obra: this.idObra
-                }
-            })
         },
 
         $_buscarUsuarios() {

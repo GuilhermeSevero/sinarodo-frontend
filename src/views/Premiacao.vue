@@ -71,7 +71,7 @@
             titulo="Pontuação por Categorias"
             :colunas="colunas"
             row-chave="id"
-            sort-padrao="ano_periodo"
+            sort-padrao="categoria__descricao"
             :define-filtros="$_defineFiltrosPremiacoes"
             selecao="none"
         />
@@ -103,22 +103,22 @@ export default {
             dados: null,
 
             colunas: [
-                {
-                    name: 'ano_periodo',
-                    required: true,
-                    label: 'Ano',
-                    align: 'left',
-                    field: 'ano_periodo',
-                    sortable: true
-                },
-                {
-                    name: 'mes_periodo',
-                    required: true,
-                    label: 'Mês',
-                    align: 'left',
-                    field: 'mes_periodo',
-                    sortable: true
-                },
+                // {
+                //     name: 'ano_periodo',
+                //     required: true,
+                //     label: 'Ano',
+                //     align: 'left',
+                //     field: 'ano_periodo',
+                //     sortable: true
+                // },
+                // {
+                //     name: 'mes_periodo',
+                //     required: true,
+                //     label: 'Mês',
+                //     align: 'left',
+                //     field: 'mes_periodo',
+                //     sortable: true
+                // },
                 {
                     name: 'categoria__descricao',
                     required: true,
@@ -186,6 +186,7 @@ export default {
 
         $_defineFiltrosPremiacoes(config) {
             config.params.id_usuario_obra = this.idUsuarioObra
+            config.params.apenas_categorias = 'True'
             config.params.expand = '~all'
             return config
         },

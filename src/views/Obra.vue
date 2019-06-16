@@ -71,8 +71,6 @@
             <div class="col-md-6">
                 <q-field
                     class="g-form-filtro-field"
-                    error-label="Digite a data de fim da obra"
-                    :error="$v.parametros.data_final.$error"
                 >
                     <q-datetime
                         id="dateFinal"
@@ -82,7 +80,6 @@
                         float-label="Data Final"
                         clearable
                         format="DD/MM/YYYY"
-                        @blur="$v.parametros.data_final.$touch"
                     />
                 </q-field>
             </div>
@@ -139,8 +136,7 @@ export default {
     validations: {
         parametros: {
             pedido: { required },
-            data_inicio: { required },
-            data_final: { required }
+            data_inicio: { required }
         }
     },
 
