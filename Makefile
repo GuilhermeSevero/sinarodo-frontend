@@ -1,5 +1,5 @@
 host = guisevero
-tag = 1.0.0
+tag = 1.1.0
 image = appsinarodo
 export DCK_HOST=$(host)
 export IMAGE_TAG=$(tag)
