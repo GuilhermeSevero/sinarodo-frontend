@@ -65,15 +65,12 @@
             </div>
         </div>
         <hr class="q-hr q-my-lg">
-        <data-table
+        <q-table
             ref="table"
-            url-base="/premiacoes/"
-            titulo="Pontuação por Categorias"
-            :colunas="colunas"
-            row-chave="id"
-            sort-padrao="categoria__descricao"
-            :define-filtros="$_defineFiltrosPremiacoes"
-            selecao="none"
+            title="Pontuação por Categorias"
+            :data="pontuacoes"
+            :columns="colunas"
+            :rows-per-page-options="[5, 10, 20, 50, 100]"
         />
         <modal-diminuir-dias-em-campo
             v-if="dados"
@@ -102,23 +99,9 @@ export default {
         return {
             dados: null,
 
+            pontuacoes: [],
+
             colunas: [
-                // {
-                //     name: 'ano_periodo',
-                //     required: true,
-                //     label: 'Ano',
-                //     align: 'left',
-                //     field: 'ano_periodo',
-                //     sortable: true
-                // },
-                // {
-                //     name: 'mes_periodo',
-                //     required: true,
-                //     label: 'Mês',
-                //     align: 'left',
-                //     field: 'mes_periodo',
-                //     sortable: true
-                // },
                 {
                     name: 'categoria__descricao',
                     required: true,
@@ -186,23 +169,42 @@ export default {
 
         $_defineFiltrosPremiacoes(config) {
             config.params.id_usuario_obra = this.idUsuarioObra
-            config.params.apenas_categorias = 'True'
-            config.params.expand = '~all'
+            config.params.expand = 'categoria'
             return config
         },
 
-        $_buscarDados() {
-            this.$axios
+        $_buscarPremiacoes() {
+            return this.$axios
+                .get('/premiacoes/', {
+                    params: {
+                        id_usuario_obra: this.idUsuarioObra,
+                        expand: 'categoria',
+                        per_page: 1000
+                    }
+                })
+        },
+
+        $_buscarDadosObras() {
+            return this.$axios
                 .get(`/usuario_obra/${this.idUsuarioObra}/`, {
                     params: {
                         expand: '~all'
                     }
                 })
-                .then(({ data }) => {
-                    this.dados = data
-                    this.$nextTick(() => {
-                        this.$refs.table.pesquisar()
-                    })
+        },
+
+        $_buscarDados() {
+            this.dados = null
+            this.premiacao = []
+
+            Promise.all([
+                this.$_buscarDadosObras(),
+                this.$_buscarPremiacoes()
+            ])
+                .then(response => {
+                    let [obra, premiacao] = response
+                    this.dados = obra.data
+                    this.pontuacoes = this.$_manipularDadosPontuacao(premiacao.data)
                 })
                 .catch(erro => {
                     this.$notify.error({
@@ -220,6 +222,20 @@ export default {
 
         $_onDiasDiminuidos() {
             this.$_buscarDados()
+        },
+
+        $_manipularDadosPontuacao(dados) {
+            let map = new Map()
+            dados
+                .map(({ categoria, nota }) => ({
+                    categoria,
+                    nota
+                }))
+                .sort((a, b) => a.categoria.id - b.categoria.id)
+                .forEach(element => {
+                    map.set(JSON.stringify(element), element)
+                })
+            return [ ...map.values() ]
         }
     }
 }

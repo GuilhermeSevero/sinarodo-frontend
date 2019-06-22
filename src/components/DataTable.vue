@@ -180,6 +180,7 @@ export default {
                     this.paginacao.rowsNumber = headers['x-total']
 
                     this.dados = data
+
                     this.carregando = false
                 })
                 .catch(erro => {
