@@ -10,13 +10,13 @@
                     <div class="c-dados"><span class="c-titulo-dados q-subheading">Pedido:</span> {{ dados.obra.pedido }}</div>
                     <div
                         class="c-dados"
-                    ><span class="c-titulo-dados q-subheading">Data Lançamento:</span> {{ formatDate(dados.obra.data_lancamento, 'DD/MM/YYYY') }}</div>
+                    ><span class="c-titulo-dados q-subheading">Data Lançamento:</span> {{ formatDate(dados.obra.data_lancamento) }}</div>
                     <div
                         class="c-dados"
-                    ><span class="c-titulo-dados q-subheading">Data Inicio:</span> {{ formatDate(dados.obra.data_inicio, 'DD/MM/YYYY') }}</div>
+                    ><span class="c-titulo-dados q-subheading">Data Inicio:</span> {{ formatDate(dados.obra.data_inicio) }}</div>
                     <div
                         class="c-dados"
-                    ><span class="c-titulo-dados q-subheading">Data Final:</span> {{ formatDate(dados.obra.data_final, 'DD/MM/YYYY') }}</div>
+                    ><span class="c-titulo-dados q-subheading">Data Final:</span> {{ formatDate(dados.obra.data_final) }}</div>
                     <div
                         class="c-dados"
                     ><span class="c-titulo-dados q-subheading">Observação:</span> {{ dados.obra.observacao }}</div>
@@ -39,6 +39,7 @@
                 >
                     <div class="col-md-7">
                         <div class="c-header-dados q-headline text-primary">Nota Final: {{ dados.nota_final }}</div>
+                        <div class="c-dados"><span class="c-titulo-dados q-subheading">Periodo em campo:</span> {{ formatDate(dados.data_inicio) }} à {{ formatDate(dados.data_final) }}</div>
                         <div class="c-dados"><span class="c-titulo-dados q-subheading">Observação:</span> {{ dados.observacao }}</div>
                         <q-btn
                             class="q-mt-md"
@@ -165,7 +166,7 @@ export default {
     },
 
     methods: {
-        formatDate: (data, formato) => date.formatDate(data, formato),
+        formatDate: (data) => date.formatDate(data, 'DD/MM/YYYY'),
 
         $_defineFiltrosPremiacoes(config) {
             config.params.id_usuario_obra = this.idUsuarioObra
