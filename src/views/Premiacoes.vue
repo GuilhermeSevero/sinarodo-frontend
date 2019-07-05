@@ -176,6 +176,24 @@ export default {
                     sortable: true
                 },
                 {
+                    name: 'data_inicio',
+                    required: true,
+                    label: 'Data Inicio',
+                    align: 'left',
+                    sortable: true,
+                    field: 'data_inicio',
+                    format: val => date.formatDate(val, 'DD/MM/YYYY')
+                },
+                {
+                    name: 'data_final',
+                    required: true,
+                    label: 'Data Final',
+                    align: 'left',
+                    sortable: true,
+                    field: 'data_final',
+                    format: val => date.formatDate(val, 'DD/MM/YYYY')
+                },
+                {
                     name: 'usuario__nome',
                     required: true,
                     label: 'Usuário',
